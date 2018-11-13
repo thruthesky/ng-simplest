@@ -1,7 +1,10 @@
 import { Injectable, Inject } from '@angular/core';
 import { SimplestConfigToken } from './simplest.config';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaderResponse, HttpEventType } from '@angular/common/http';
-import { SimplestConfig, File, FileCreateOptions, Response, FileDeleteOptions } from './simplest.interface';
+import {
+    SimplestConfig, File, FileCreateOptions, Response, FileDeleteOptions,
+    ImageGenerateOptions
+} from './simplest.interface';
 import { Observable, throwError } from 'rxjs';
 import { map, filter, catchError } from 'rxjs/operators';
 
@@ -17,7 +20,7 @@ export class SimplestService {
 
 
     createError(code: string, message: string) {
-        return { code: code, message: message };
+        return { error_code: code, error_message: message };
     }
 
     get backendUrl() {
@@ -52,10 +55,11 @@ export class SimplestService {
         return this.http.post(this.backendUrl, data).pipe(
             map((res: Response) => {
                 /**
-                 * PhilGo API 부터 잘 처리된 결과 데이터가 전달되었다면,
-                 * 데이터만 Observable 로 리턴한다.
+                 * error_code 에 값이 있으면 에러이다.
+                 * 단, relation 값이 있으면, file record 의 값일 수 있다.
+                 * 잘 처리된 결과 데이터가 전달되었다면, 데이터 Observable 로 리턴한다.
                  */
-                if (res.code !== void 0 && res.code) {
+                if (res.error_code !== void 0 && res.error_code) {
                     // console.log('** PhilGoApiService -> post -> http.post -> pipe -> map -> res: ', res);
                     /**
                      * (인터넷 접속 에러나 서버 프로그램 에러가 아닌)
@@ -73,13 +77,13 @@ export class SimplestService {
                 /**
                  * API 의 에러이면 그대로 Observable Error 를 리턴한다.
                  */
-                if (e['code'] !== void 0 && e['code'] ) {
+                if (e['code'] !== void 0 && e['code']) {
                     return throwError(e);
                 }
                 /**
                  * API 에러가 아니면, 인터넷 단절, 리눅스/웹서버 다운, PHP script 문법 에러 등이 있을 수 있다.
                  */
-                return throwError( this.createError('not-server-error', 'Please check your Internet.'));
+                return throwError(this.createError('not-server-error', 'Please check your Internet.'));
             })
         );
     }
@@ -121,7 +125,7 @@ export class SimplestService {
         return this.http.request(req).pipe(
             map(e => {
                 if (e instanceof HttpResponse) { // success event. upload finished.
-                    console.log('e instanceof HttpResponse: ', e);
+                    // console.log('e instanceof HttpResponse: ', e);
                     return e['body'];
                 } else if (e instanceof HttpHeaderResponse) { // header event. It may be a header part from the server response.
                     // don't return anything about header.
@@ -145,12 +149,26 @@ export class SimplestService {
         );
 
     }
+
+    /**
+     * File deletes.
+     * @param options options to delete a file.
+     */
     fileDelete(options: FileDeleteOptions) {
         options.run = 'file.delete';
+        // console.log('options: ', options);
         return this.post(options);
     }
 
 
+    /**
+     * This generates an image into a different size.
+     * @param options options to delete
+     */
+    imageGenerate(options: ImageGenerateOptions) {
+        options.run = 'file.image-generate';
+        return this.post(options);
+    }
 
     private httpBuildQuery(params): string | null {
         const keys = Object.keys(params);

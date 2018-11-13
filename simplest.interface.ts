@@ -13,8 +13,8 @@ export interface Request {
 }
 
 export interface Response {
-    code: number;
-    message?: string;
+    error_code: number;
+    error_message?: string;
 }
 
 
@@ -25,6 +25,19 @@ export interface FileCreateOptions extends Request {
 export interface FileDeleteOptions extends Request {
     idx: string;            // files.idx
 }
+
+export interface ImageGenerateOptions extends Request {
+    idx: string;
+    width: any;
+    height: any;
+    quality: any;
+    mode: 'crop' | 'resize';
+    relation: any;
+    code: any;
+    user_no: any;
+}
+
+
 
 export interface File {
     idx: string;             // unique id to identify the uploaded file.
