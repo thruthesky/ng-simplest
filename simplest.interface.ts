@@ -1,3 +1,5 @@
+
+
 export const CONFIG_NAME = 'SimplestConfig';
 
 
@@ -8,14 +10,34 @@ export interface SimplestConfig {
 
 export interface Request {
     run?: string;        // strip string to run. format: "folder.file.function"
-    user_no?: string;
-    security_code?: string;
+    session_id?: string;
 }
 
 export interface Response {
-    error_code: number;
+    error_code?: number;
     error_message?: string;
 }
+
+
+export interface UserRegister extends Request {
+    email: string;
+    password: string;
+    name?: string;
+    nickname?: string;
+}
+export interface UserLogin extends Request {
+    email: string;
+    password: string;
+}
+
+export interface User extends Response {
+    session_id: string;
+    idx: string;
+    email: string;
+    name: string;
+    nickname: string;
+}
+
 
 
 export interface FileCreateOptions extends Request {
@@ -41,7 +63,7 @@ export interface ImageGenerateOptions extends Request {
 
 export interface File {
     idx: string;             // unique id to identify the uploaded file.
-    user_no: string;            // user no
+    idx_user: string;            // user no
     relation: string;
     code: string;
     name: string;           // file name
@@ -53,6 +75,7 @@ export interface File {
     stamp_updated: string;  // time of updated.
     url: string;            // url of the file.
 }
+
 
 
 

@@ -3,11 +3,15 @@ import { SimplestConfigToken } from './simplest.config';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaderResponse, HttpEventType } from '@angular/common/http';
 import {
     SimplestConfig, File, FileCreateOptions, Response, FileDeleteOptions,
-    ImageGenerateOptions
+    ImageGenerateOptions,
+    UserRegister,
+    User,
+    UserLogin
 } from './simplest.interface';
 import { Observable, throwError } from 'rxjs';
-import { map, filter, catchError } from 'rxjs/operators';
+import { map, filter, catchError, tap } from 'rxjs/operators';
 
+const USER_LOGIN_KEY = 'user_login';
 @Injectable()
 export class SimplestService {
 
@@ -18,7 +22,36 @@ export class SimplestService {
         console.log('SimplestService::constructor() : config: ', this.config);
     }
 
+    /**
+     * It returns if the input object is a success data from backend.
+     * @param obj returned data from backend
+     * @return
+     *  true if success
+     *  false if error
+     */
+    isSuccess(obj): boolean {
+        if (!obj) {
+            return false;
+        }
+        if (this.isError(obj)) {
+            return false;
+        }
+        if (typeof obj === 'number') {
+            return false;
+        }
+        if (typeof obj === 'string') {
+            return false;
+        }
+        return true;
+    }
 
+    /**
+     * Return true if the input object is an error object.
+     * @param obj error object or anything
+     */
+    isError(obj) {
+        return obj['error_code'] !== void 0 && obj['error_code'];
+    }
     createError(code: string, message: string) {
         return { error_code: code, error_message: message };
     }
@@ -29,8 +62,6 @@ export class SimplestService {
 
 
     /**
-     * 서버로 POST request 를 전송하고 결과를 받아서 데이터를 Observable 로 리턴하거나
-     * 응답에 에러가 있거나 각종 상황에서 에러가 있으면 그 에러를 Observable 로 리턴한다.
      *
      * Request to server through POST method.
      * And returns response data observable or error observable.
@@ -41,7 +72,7 @@ export class SimplestService {
      *      data['route'] - route
      *
      * @return
-     *      - 에러가 있으면 { code: number, message: string } 으로 Observable 이 리턴된다.
+     *  If error, error object will be returned.
      */
     post(data): Observable<any> {
         if (data['debug']) {
@@ -55,39 +86,101 @@ export class SimplestService {
         return this.http.post(this.backendUrl, data).pipe(
             map((res: Response) => {
                 /**
-                 * error_code 에 값이 있으면 에러이다.
-                 * 단, relation 값이 있으면, file record 의 값일 수 있다.
-                 * 잘 처리된 결과 데이터가 전달되었다면, 데이터 Observable 로 리턴한다.
+                 * If error, throw that error. So, catchError will catch.
                  */
-                if (res.error_code !== void 0 && res.error_code) {
-                    // console.log('** PhilGoApiService -> post -> http.post -> pipe -> map -> res: ', res);
-                    /**
-                     * (인터넷 접속 에러나 서버 프로그램 에러가 아닌)
-                     * PhilGo API 가 올바로 실행되었지만 결과에 성공적이지 못하다면
-                     * Javascript 에러를 throw 해서 catchError() 에러 처리한다.
-                     */
-                    throw res;
-                } else {
+                if (this.isSuccess(res)) {
                     return res;
+                } else {
+                    throw res;
                 }
             }),
             catchError(e => {
-                // console.log('PhilGoApiService::post() => catchError()');
-                // console.log('catchError: ', e);
                 /**
-                 * API 의 에러이면 그대로 Observable Error 를 리턴한다.
+                 * If this is an error from backend, just throw.
                  */
-                if (e['code'] !== void 0 && e['code']) {
+                if (this.isError(e)) {
                     return throwError(e);
                 }
                 /**
-                 * API 에러가 아니면, 인터넷 단절, 리눅스/웹서버 다운, PHP script 문법 에러 등이 있을 수 있다.
+                 * If this is not an error from backend,
+                 *  - No internet
+                 *  - Server down
+                 *  - PHP script error
                  */
+                console.error(e);
                 return throwError(this.createError('not-server-error', 'Please check your Internet.'));
             })
         );
     }
 
+
+
+    /**
+     * Saves user response data
+     * @param user user response data from backend
+     */
+    private setUser(user: User) {
+        this.set(USER_LOGIN_KEY, user);
+    }
+    /**
+     * Returns user response data
+     */
+    private getUser(): User {
+        return this.get(USER_LOGIN_KEY);
+    }
+
+    /**
+     * Returns user data in localStorage saved when user register/update/login from backend.
+     * @return
+     *  user data
+     *  or empty object if user didn't logged in to make it safe to use.
+     */
+    get user(): User {
+        const data = this.getUser();
+        console.log('data: ', data);
+        if (data) {
+            return data;
+        } else {
+            return <User><any>{};
+        }
+    }
+
+    /**
+     * Returns true if user has logged in.
+     */
+    isLoggedIn(): boolean {
+        const login = this.getUser();
+        if (login && login.session_id) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    register(user: UserRegister): Observable<User> {
+        user.run = 'user.register';
+        return this.post(user).pipe(
+            tap(res => this.setUser(res))
+        );
+    }
+
+    login(email, password): Observable<User> {
+        const data: UserLogin = {
+            run: 'user.login',
+            email: email,
+            password: password
+        };
+        return this.post(data).pipe(
+            tap(res => this.setUser(res))
+        );
+    }
+
+    profile() {
+
+    }
+    profileUpdate() {
+
+    }
 
     /**
      * Uploads a file using Custom API
@@ -113,8 +206,8 @@ export class SimplestService {
         if (options.code) {
             formData.append('code', options.code);
         }
-        if (options.user_no) {
-            formData.append('user_no', options.user_no);
+        if (options.session_id) {
+            formData.append('session_id', options.session_id);
         }
 
         const req = new HttpRequest('POST', this.backendUrl, formData, {
@@ -180,6 +273,44 @@ export class SimplestService {
             .map(k => esc(k) + '=' + esc(params[k]))
             .join('&');
         return query;
+    }
+
+
+
+    /**
+     * Gets data from localStroage and returns after JSON.parse()
+     * .set() automatically JSON.stringify()
+     * .get() automatically JSON.parse()
+     *
+     * @return
+     *      null if there is error or there is no value.
+     *      Or value that were saved.
+     */
+    private get(key: string): any {
+        const value = localStorage.getItem(key);
+        if (value !== null) {
+            try {
+                return JSON.parse(value);
+            } catch (e) {
+                return null;
+            }
+        }
+        return null;
+    }
+
+
+
+
+    /**
+     * Saves data to localStorage.
+     *
+     * It does `JSON.stringify()` before saving, so you don't need to do it by yourself.
+     *
+     * @param key key
+     * @param data data to save in localStorage
+     */
+    private set(key, data): void {
+        localStorage.setItem(key, JSON.stringify(data));
     }
 
 }
