@@ -13,14 +13,19 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { map, filter, catchError, tap } from 'rxjs/operators';
 
-const USER_LOGIN_KEY = 'user_login';
+import { docCookies as cookie } from './simple.cookie';
+import { SimplestLibrary } from './simplest.library';
+
+
+const USER_KEY = '_user';
 @Injectable()
-export class SimplestService {
+export class SimplestService extends SimplestLibrary {
 
     constructor(
         private http: HttpClient,
         @Inject(SimplestConfigToken) private config: SimplestConfig
     ) {
+        super();
         console.log('SimplestService::constructor() : config: ', this.config);
     }
 
@@ -52,16 +57,16 @@ export class SimplestService {
      * @param obj error object or anything
      */
     isError(obj: ErrorObject): boolean {
-        if ( ! obj ) {
+        if (!obj) {
             return false;
         }
-        if ( typeof obj !== 'object' ) {
+        if (typeof obj !== 'object') {
             return false;
         }
-        if ( obj.error_code === void 0 ) {
+        if (obj.error_code === void 0) {
             return false;
         }
-        if ( ! obj.error_code ) {
+        if (!obj.error_code) {
             return false;
         }
         return true;
@@ -140,14 +145,32 @@ export class SimplestService {
      * @param user user response data from backend
      */
     private setUser(user: User) {
-        this.set(USER_LOGIN_KEY, user);
+        if (this.config.enableLoginToAllSubdomains) {
+            cookie.setItem(USER_KEY, JSON.stringify(user), Infinity, '/', '.' + this.currentRootDomain());
+        } else {
+            this.set(USER_KEY, user);
+        }
     }
     /**
      * Returns user response data
      */
     private getUser(): User {
-        return this.get(USER_LOGIN_KEY);
+        if (this.config.enableLoginToAllSubdomains) {
+            const val = cookie.getItem(USER_KEY);
+            if (val) {
+                try {
+                    return JSON.parse(val);
+                } catch {
+                    return null;
+                }
+            }
+            console.log('Got user from cookie: ', val);
+        } else {
+            return this.get(USER_KEY);
+        }
     }
+
+
 
     /**
      * Returns user data in localStorage saved when user register/update/login from backend.
@@ -297,56 +320,6 @@ export class SimplestService {
     imageGenerate(options: ImageGenerateOptions) {
         options.run = 'file.image-generate';
         return this.post(options);
-    }
-
-    private httpBuildQuery(params): string | null {
-        const keys = Object.keys(params);
-        if (keys.length === 0) {
-            return null; //
-        }
-        const esc = encodeURIComponent;
-        const query = keys
-            .map(k => esc(k) + '=' + esc(params[k]))
-            .join('&');
-        return query;
-    }
-
-
-
-    /**
-     * Gets data from localStroage and returns after JSON.parse()
-     * .set() automatically JSON.stringify()
-     * .get() automatically JSON.parse()
-     *
-     * @return
-     *      null if there is error or there is no value.
-     *      Or value that were saved.
-     */
-    private get(key: string): any {
-        const value = localStorage.getItem(key);
-        if (value !== null) {
-            try {
-                return JSON.parse(value);
-            } catch (e) {
-                return null;
-            }
-        }
-        return null;
-    }
-
-
-
-
-    /**
-     * Saves data to localStorage.
-     *
-     * It does `JSON.stringify()` before saving, so you don't need to do it by yourself.
-     *
-     * @param key key
-     * @param data data to save in localStorage
-     */
-    private set(key, data): void {
-        localStorage.setItem(key, JSON.stringify(data));
     }
 
 }
