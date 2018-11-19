@@ -6,7 +6,9 @@ import {
     ImageGenerateOptions,
     UserRegister,
     User,
-    UserLogin
+    UserLogin,
+    UserProfile,
+    ErrorObject
 } from './simplest.interface';
 import { Observable, throwError } from 'rxjs';
 import { map, filter, catchError, tap } from 'rxjs/operators';
@@ -49,10 +51,28 @@ export class SimplestService {
      * Return true if the input object is an error object.
      * @param obj error object or anything
      */
-    isError(obj) {
-        return obj['error_code'] !== void 0 && obj['error_code'];
+    isError(obj: ErrorObject): boolean {
+        if ( ! obj ) {
+            return false;
+        }
+        if ( typeof obj !== 'object' ) {
+            return false;
+        }
+        if ( obj.error_code === void 0 ) {
+            return false;
+        }
+        if ( ! obj.error_code ) {
+            return false;
+        }
+        return true;
     }
-    createError(code: string, message: string) {
+
+    /**
+     * Returns an error object
+     * @param code error code
+     * @param message error string
+     */
+    createError(code: string, message: string): ErrorObject {
         return { error_code: code, error_message: message };
     }
 
@@ -137,7 +157,7 @@ export class SimplestService {
      */
     get user(): User {
         const data = this.getUser();
-        console.log('data: ', data);
+        // console.log('data: ', data);
         if (data) {
             return data;
         } else {
@@ -148,9 +168,10 @@ export class SimplestService {
     /**
      * Returns true if user has logged in.
      */
-    isLoggedIn(): boolean {
-        const login = this.getUser();
-        if (login && login.session_id) {
+    get isLoggedIn(): boolean {
+        const user = this.getUser();
+        // console.log('isLoggedIn() user:', user);
+        if (user && user.session_id) {
             return true;
         } else {
             return false;
@@ -175,11 +196,26 @@ export class SimplestService {
         );
     }
 
-    profile() {
-
+    logout() {
+        this.setUser(null);
     }
-    profileUpdate() {
 
+    profile(): Observable<User> {
+        const data: UserProfile = {
+            run: 'user.profile',
+            session_id: this.user.session_id
+        };
+        console.log('request data: ', data, this.user);
+        return this.post(data).pipe(
+            tap(res => this.setUser(res))
+        );
+    }
+    profileUpdate(user: User): Observable<User> {
+        user.run = 'user.update';
+        user.session_id = this.user.session_id;
+        return this.post(user).pipe(
+            tap(res => this.setUser(res))
+        );
     }
 
     /**

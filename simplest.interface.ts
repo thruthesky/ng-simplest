@@ -13,10 +13,16 @@ export interface Request {
     session_id?: string;
 }
 
-export interface Response {
-    error_code?: number;
+export interface ErrorObject {
+    error_code?: string;
     error_message?: string;
 }
+
+export interface Response extends ErrorObject {
+    idx?: string;
+}
+
+
 
 
 export interface UserRegister extends Request {
@@ -30,12 +36,20 @@ export interface UserLogin extends Request {
     password: string;
 }
 
-export interface User extends Response {
+
+export interface UserProfile {
+    run: string;
     session_id: string;
-    idx: string;
-    email: string;
-    name: string;
-    nickname: string;
+}
+
+export interface User extends Response {
+    run?: string;
+    session_id?: string;
+    idx?: string;
+    email?: string;
+    password?: string;
+    name?: string;
+    nickname?: string;
 }
 
 
