@@ -131,7 +131,7 @@ export interface Domain {
 }
 
 
-export interface Site {
+export interface Site extends Request {
     idx?: string;               // site.idx
     user_ID?: string;            // Wordpress user ID
     terms_id_in_order?: string;
@@ -171,6 +171,20 @@ export interface Site {
     widget_mobile_posts?: 'Y' | '';
 }
 
+
+
+
+
+export interface DomainApply extends Request {
+    idx_site: string;
+    domain: string;
+}
+
+
+
+export interface Domain {
+    idx: string;
+}
 
 
 

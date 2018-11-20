@@ -7,15 +7,17 @@ import {
     User,
     UserLogin,
     UserProfile,
-    ErrorObject
+    ErrorObject,
+    Site,
+    Domain,
+    DomainApply,
+    Sites
 } from './simplest.interface';
 import { Observable, throwError } from 'rxjs';
 import { map, filter, catchError, tap } from 'rxjs/operators';
 
 import { docCookies as cookie } from './simple.cookie';
 import { SimplestLibrary } from './simplest.library';
-import { Sites } from 'modules/sonub-wordpress-rest-api/wordpress-api.interface';
-
 
 const USER_KEY = '_user';
 @Injectable()
@@ -50,7 +52,7 @@ export class SimplestService extends SimplestLibrary {
      *  If error, error object will be returned.
      */
     post(data): Observable<any> {
-        if ( data['session_id'] === void 0 && this.isLoggedIn ) {
+        if (data['session_id'] === void 0 && this.isLoggedIn) {
             data['session_id'] = this.user.session_id;
         }
         if (data['debug']) {
@@ -274,9 +276,19 @@ export class SimplestService extends SimplestLibrary {
     }
 
 
-  sites(): Observable<Sites> {
-    return this.post({ run: 'site.list' });
-  }
+    sites(): Observable<Sites> {
+        return this.post({ run: 'site.list' });
+    }
+
+    siteCreate(data: Site): Observable<Site> {
+        data.run = 'site.create';
+        return this.post(data);
+    }
+
+    siteDomainApply(data: DomainApply): Observable<Domain> {
+        data.run = 'site.domain-apply';
+        return this.post(data);
+    }
 }
 
 
