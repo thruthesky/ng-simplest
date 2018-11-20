@@ -14,6 +14,7 @@ import { map, filter, catchError, tap } from 'rxjs/operators';
 
 import { docCookies as cookie } from './simple.cookie';
 import { SimplestLibrary } from './simplest.library';
+import { Sites } from 'modules/sonub-wordpress-rest-api/wordpress-api.interface';
 
 
 const USER_KEY = '_user';
@@ -28,58 +29,6 @@ export class SimplestService extends SimplestLibrary {
         console.log('SimplestService::constructor() : config: ', this.config);
     }
 
-    /**
-     * It returns if the input object is a success data from backend.
-     * @param obj returned data from backend
-     * @return
-     *  true if success
-     *  false if error
-     */
-    isSuccess(obj): boolean {
-        if (!obj) {
-            return false;
-        }
-        if (this.isError(obj)) {
-            return false;
-        }
-        if (typeof obj === 'number') {
-            return false;
-        }
-        if (typeof obj === 'string') {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Return true if the input object is an error object.
-     * @param obj error object or anything
-     */
-    isError(obj: ErrorObject): boolean {
-        if (!obj) {
-            return false;
-        }
-        if (typeof obj !== 'object') {
-            return false;
-        }
-        if (obj.error_code === void 0) {
-            return false;
-        }
-        if (!obj.error_code) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Returns an error object
-     * @param code error code
-     * @param message error string
-     */
-    createError(code: string, message: string): ErrorObject {
-        return { error_code: code, error_message: message };
-    }
-
     get backendUrl() {
         return this.config.backendUrl;
     }
@@ -92,13 +41,18 @@ export class SimplestService extends SimplestLibrary {
      *
      * @param data request data
      *
-     *      data['session_id'] - user session id
+     *      data['session_id'] - user session id. Optional.
+     *              If it is not set and if the user has logged in
+     *              Then it will automatically add 'session_id'
      *      data['route'] - route
      *
      * @return
      *  If error, error object will be returned.
      */
     post(data): Observable<any> {
+        if ( data['session_id'] === void 0 && this.isLoggedIn ) {
+            data['session_id'] = this.user.session_id;
+        }
         if (data['debug']) {
             const q = this.httpBuildQuery(data);
             console.log('PhilGoApiService::post() url: ', this.backendUrl + '?' + q);
@@ -224,8 +178,7 @@ export class SimplestService extends SimplestLibrary {
 
     profile(): Observable<User> {
         const data: UserProfile = {
-            run: 'user.profile',
-            session_id: this.user.session_id
+            run: 'user.profile'
         };
         console.log('request data: ', data, this.user);
         return this.post(data).pipe(
@@ -234,7 +187,6 @@ export class SimplestService extends SimplestLibrary {
     }
     profileUpdate(user: User): Observable<User> {
         user.run = 'user.update';
-        user.session_id = this.user.session_id;
         return this.post(user).pipe(
             tap(res => this.setUser(res))
         );
@@ -321,6 +273,10 @@ export class SimplestService extends SimplestLibrary {
         return this.post(options);
     }
 
+
+  sites(): Observable<Sites> {
+    return this.post({ run: 'site.list' });
+  }
 }
 
 

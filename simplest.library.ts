@@ -1,5 +1,60 @@
+import { ErrorObject } from './simplest.interface';
+
 export class SimplestLibrary {
 
+
+
+    /**
+     * It returns if the input object is a success data from backend.
+     * @param obj returned data from backend
+     * @return
+     *  true if success
+     *  false if error
+     */
+    isSuccess(obj): boolean {
+        if (!obj) {
+            return false;
+        }
+        if (this.isError(obj)) {
+            return false;
+        }
+        if (typeof obj === 'number') {
+            return false;
+        }
+        if (typeof obj === 'string') {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Return true if the input object is an error object.
+     * @param obj error object or anything
+     */
+    isError(obj: ErrorObject): boolean {
+        if (!obj) {
+            return false;
+        }
+        if (typeof obj !== 'object') {
+            return false;
+        }
+        if (obj.error_code === void 0) {
+            return false;
+        }
+        if (!obj.error_code) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Returns an error object
+     * @param code error code
+     * @param message error string
+     */
+    createError(code: string, message: string): ErrorObject {
+        return { error_code: code, error_message: message };
+    }
 
 
     /**

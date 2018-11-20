@@ -48,7 +48,7 @@ export interface UserLogin extends Request {
 
 export interface UserProfile {
     run: string;
-    session_id: string;
+    session_id?: string;
 }
 
 export interface User extends Response {
@@ -111,4 +111,76 @@ export interface File {
 
 
 
+export interface Category {
+    idx: string;
+    name: string;
+}
+export type Categories = Array<Category>;
+
+
+
+
+
+
+
+
+export interface Domain {
+    domain: string;
+    reason: string;
+    status: string;
+}
+
+
+export interface Site {
+    idx?: string;               // site.idx
+    user_ID?: string;            // Wordpress user ID
+    terms_id_in_order?: string;
+    domain?: string;            // Needed to create a site.
+    domains?: Array<Domain>;    // Avaiable on response
+    name?: string;              // site name
+    author?: string;            // Blog poster/writer name. mostly blog owner's nickname.
+    description?: string;
+    keywords?: string;
+    categories?: Categories;
+
+    // HTML for site head.
+    // @see https://docs.google.com/document/d/1nOEJVDilLbF0sNCkkRGcDwdT3rDLZp3h59oQ77BIdp4/edit#heading=h.bn3bu2qkurcu
+    head?: string;
+
+    //
+    favicon_url?: string;        // favicon url
+    app_name?: string;
+    app_short_name?: string;
+    app_theme_color?: string;
+    app_icon_url?: string;      //
+    app_icon_url_72?: string;            //
+    app_icon_url_96?: string;            //
+    app_icon_url_128?: string;          //
+    app_icon_url_144?: string;          //
+    app_icon_url_152?: string;          //
+    app_icon_url_192?: string;          //
+    app_icon_url_384?: string;          //
+    app_icon_url_512?: string;          //
+    logo_url?: string;
+    preview_image_url?: string;
+    desktop_banner_width_image_url?: string;  //
+    mobile_banner_width_image_url?: string;  //
+    widget_desktop_comments?: 'Y' | '';
+    widget_mobile_comments?: 'Y' | '';
+    widget_desktop_posts?: 'Y' | '';
+    widget_mobile_posts?: 'Y' | '';
+}
+
+
+
+
+
+export interface Sites {
+    max_domains: number;
+    max_sites: number;
+    available_domains: number;
+    available_sites: number;
+    no_of_domains_in_progress: number;
+    sites: Array<Site>;
+}
 
