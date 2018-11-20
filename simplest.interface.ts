@@ -26,12 +26,20 @@ export interface Response extends ErrorObject {
 
 
 
-export interface UserRegister extends Request {
-    email: string;
-    password: string;
-    name?: string;
-    nickname?: string;
-}
+// export interface UserRegister extends Request {
+//     email: string;
+//     password: string;
+//     name?: string;
+//     nickname?: string;
+//     gender?: string;
+//     birthday?: string;
+//     mobile?: string;
+//     landline?: string;
+//     country?: string;
+//     province?: string;
+//     city?: string;
+//     address?: string;
+// }
 export interface UserLogin extends Request {
     email: string;
     password: string;
@@ -51,6 +59,14 @@ export interface User extends Response {
     password?: string;
     name?: string;
     nickname?: string;
+    gender?: string;
+    birthday?: string;
+    mobile?: string;
+    landline?: string;
+    country?: string;
+    province?: string;
+    city?: string;
+    address?: string;
 }
 
 

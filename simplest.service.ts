@@ -4,7 +4,6 @@ import { HttpClient, HttpRequest, HttpResponse, HttpHeaderResponse, HttpEventTyp
 import {
     SimplestConfig, File, FileCreateOptions, Response, FileDeleteOptions,
     ImageGenerateOptions,
-    UserRegister,
     User,
     UserLogin,
     UserProfile,
@@ -201,7 +200,7 @@ export class SimplestService extends SimplestLibrary {
         }
     }
 
-    register(user: UserRegister): Observable<User> {
+    register(user: User): Observable<User> {
         user.run = 'user.register';
         return this.post(user).pipe(
             tap(res => this.setUser(res))
