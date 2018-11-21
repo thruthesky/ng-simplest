@@ -277,7 +277,12 @@ export class SimplestService extends SimplestLibrary {
 
 
     site(idx_site): Observable<Site> {
-        return this.post({ run: 'site.get', idx_site: idx_site, debug: true });
+        return this.post({ run: 'site.get', idx_site: idx_site });
+    }
+
+    siteUpdate(data: Site): Observable<Site> {
+        data.run = 'site.update';
+        return this.post(data);
     }
 
     sites(): Observable<Sites> {
