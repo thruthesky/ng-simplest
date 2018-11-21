@@ -112,7 +112,7 @@ export interface File {
 
 
 export interface Category extends Request {
-    idx?: number | string;
+    idx?: any;
     taxonomy?: string; //
     relation?: string;
     slug?: string;

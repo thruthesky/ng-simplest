@@ -338,6 +338,29 @@ export class SimplestService extends SimplestLibrary {
         return this.post(data);
     }
 
+    categoryUpdate(data: Category): Observable<Category> {
+        data.run = 'category.update';
+        return this.post(data);
+    }
+
+    categoryDelete(idx: Category): Observable<Category> {
+        const data = {
+            run: 'category.delete',
+            idx: idx
+        };
+        return this.post(data);
+    }
+
+    siteSortCategories(idx, orders) {
+        const data = {
+            run: 'site.sort-categories',
+            idx: idx,
+            orders: orders
+        };
+        return this.post(data);
+    }
+
+
     postList(data: PostList): Observable<PostList> {
         data.run = 'post.list';
         return this.post(data);
@@ -347,10 +370,10 @@ export class SimplestService extends SimplestLibrary {
         data.run = 'post.create';
         return this.post(data);
     }
-    postGet(idx_post: any): Observable<Post> {
+    postGet(idx: any): Observable<Post> {
         const data = {
             run: 'post.get',
-            idx_post: idx_post
+            idx: idx
         };
         return this.post(data);
     }
