@@ -111,9 +111,12 @@ export interface File {
 
 
 
-export interface Category {
-    idx: string;
-    name: string;
+export interface Category extends Request {
+    idx?: number | string;
+    taxonomy?: string; //
+    relation?: string;
+    slug?: string;
+    name?: string;
 }
 export type Categories = Array<Category>;
 
@@ -203,3 +206,21 @@ export interface Sites {
     sites?: Array<Site>;
 }
 
+
+
+export interface Post extends Request {
+    idx?: string;
+    idx_category?: string;
+    title?: string;
+    content?: string;
+    content_stripped?: string;
+}
+
+
+
+export interface PostList extends Request {
+    idx_category?: string;
+    page?: number;
+    limit?: number;
+    posts?: Array<Post>;
+}

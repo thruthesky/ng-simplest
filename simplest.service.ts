@@ -11,7 +11,11 @@ import {
     Site,
     Domain,
     DomainApply,
-    Sites
+    Sites,
+    Categories,
+    Category,
+    PostList,
+    Post
 } from './simplest.interface';
 import { Observable, throwError } from 'rxjs';
 import { map, filter, catchError, tap } from 'rxjs/operators';
@@ -276,8 +280,8 @@ export class SimplestService extends SimplestLibrary {
     }
 
 
-    site(idx_site): Observable<Site> {
-        return this.post({ run: 'site.get', idx_site: idx_site });
+    site(idx_site_or_domain): Observable<Site> {
+        return this.post({ run: 'site.get', idx_site_or_domain: idx_site_or_domain });
     }
 
     siteUpdate(data: Site): Observable<Site> {
@@ -305,7 +309,54 @@ export class SimplestService extends SimplestLibrary {
         };
         return this.post(data);
     }
+
+
+
+    /**
+     * @example
+     *     this.a.sp.categoryList().subscribe( cats => {
+      this.categories = cats;
+    }, e => this.a.error(e));
+     */
+    categoryList(): Observable<Categories> {
+        return this.post({ run: 'category.list' });
+    }
+
+    /**
+     *
+     * @param data data to create a category
+     *
+     * @example
+     *
+    this.a.sp.categoryCreate(this.form).subscribe( cat => {
+      this.form = cat;
+      this.a.alert('success');
+    }, e => this.a.error(e));
+     */
+    categoryCreate(data: Category): Observable<Category> {
+        data.run = 'category.create';
+        return this.post(data);
+    }
+
+    postList(data: PostList): Observable<PostList> {
+        data.run = 'post.list';
+        return this.post(data);
+    }
+
+    postCreate(data: Post): Observable<Post> {
+        data.run = 'post.create';
+        return this.post(data);
+    }
+    postGet(idx_post: any): Observable<Post> {
+        const data = {
+            run: 'post.get',
+            idx_post: idx_post
+        };
+        return this.post(data);
+    }
 }
+
+
 
 
 
