@@ -169,6 +169,7 @@ export interface Site extends Request {
     widget_mobile_comments?: 'Y' | '';
     widget_desktop_posts?: 'Y' | '';
     widget_mobile_posts?: 'Y' | '';
+    global_settings?: SiteGlobalSettings;
 }
 
 
@@ -188,13 +189,17 @@ export interface Domain {
 
 
 
-
-export interface Sites {
+export interface SiteGlobalSettings {
     max_domains: number;
     max_sites: number;
     available_domains: number;
     available_sites: number;
     no_of_domains_in_progress: number;
-    sites: Array<Site>;
+    default_domains: Array<string>;
+}
+
+export interface Sites {
+    global_settings?: SiteGlobalSettings;
+    sites?: Array<Site>;
 }
 

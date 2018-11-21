@@ -276,6 +276,10 @@ export class SimplestService extends SimplestLibrary {
     }
 
 
+    site(idx_site): Observable<Site> {
+        return this.post({ run: 'site.get', idx_site: idx_site, debug: true });
+    }
+
     sites(): Observable<Sites> {
         return this.post({ run: 'site.list' });
     }
@@ -289,7 +293,15 @@ export class SimplestService extends SimplestLibrary {
         data.run = 'site.domain-apply';
         return this.post(data);
     }
+    siteDomainDelete(domain): Observable<Domain> {
+        const data = {
+            run: 'site.domain-delete',
+            domain: domain
+        };
+        return this.post(data);
+    }
 }
+
 
 
 
