@@ -216,6 +216,8 @@ export interface Post extends Request {
     content_stripped?: string;
 }
 
+export type Posts = Array<Post>;
+
 
 
 export interface PostList extends Request {
