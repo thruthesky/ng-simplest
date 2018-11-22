@@ -82,15 +82,27 @@ export interface FileDeleteOptions extends Request {
     idx: string;            // files.idx
 }
 
-export interface ImageGenerateOptions extends Request {
+// export interface ImageGenerateOptions extends Request {
+//     idx: string;
+//     width: any;
+//     height: any;
+//     quality: any;
+//     mode: 'crop' | 'resize';
+//     relation: any;
+//     code: any;
+//     user_no: any;
+// }
+
+
+export interface FileImageResize extends Request {
     idx: string;
     width: any;
     height: any;
     quality: any;
     mode: 'crop' | 'resize';
+    taxonomy: string;
     relation: any;
-    code: any;
-    user_no: any;
+    code: string;
 }
 
 

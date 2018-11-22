@@ -2,12 +2,14 @@ import { Injectable, Inject } from '@angular/core';
 import { SimplestConfigToken } from './simplest.config';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaderResponse, HttpEventType } from '@angular/common/http';
 import {
-    SimplestConfig, File, FileCreateOptions, Response, FileDeleteOptions,
-    ImageGenerateOptions,
+    SimplestConfig,
+    File,
+    FileCreateOptions,
+    Response,
+    FileDeleteOptions,
     User,
     UserLogin,
     UserProfile,
-    ErrorObject,
     Site,
     Domain,
     DomainApply,
@@ -15,7 +17,8 @@ import {
     Categories,
     Category,
     PostList,
-    Post
+    Post,
+    FileImageResize
 } from './simplest.interface';
 import { Observable, throwError } from 'rxjs';
 import { map, filter, catchError, tap } from 'rxjs/operators';
@@ -252,7 +255,12 @@ export class SimplestService extends SimplestLibrary {
             map(e => {
                 if (e instanceof HttpResponse) { // success event. upload finished.
                     // console.log('e instanceof HttpResponse: ', e);
-                    return e['body'];
+                    const re = e['body'];
+                    if (this.isError(re)) {
+                        throw re;
+                    } else {
+                        return re;
+                    }
                 } else if (e instanceof HttpHeaderResponse) { // header event. It may be a header part from the server response.
                     // don't return anything about header.
                     // return e;
@@ -291,8 +299,13 @@ export class SimplestService extends SimplestLibrary {
      * This generates an image into a different size.
      * @param options options to delete
      */
-    imageGenerate(options: ImageGenerateOptions) {
-        options.run = 'file.image-generate';
+    // imageGenerate(options: ImageGenerateOptions) {
+    //     options.run = 'file.image-generate';
+    //     return this.post(options);
+    // }
+
+    fileImageResize(options: FileImageResize): Observable<File> {
+        options.run = 'file.image-resize';
         return this.post(options);
     }
 
