@@ -67,12 +67,15 @@ export interface User extends Response {
     province?: string;
     city?: string;
     address?: string;
+    photo?: File;
 }
 
 
 
+
 export interface FileCreateOptions extends Request {
-    relation: string;       // the target object that this file is related to/in.
+    taxonomy?: string;
+    relation?: any;
     code?: string;
 }
 export interface FileDeleteOptions extends Request {
@@ -90,22 +93,6 @@ export interface ImageGenerateOptions extends Request {
     user_no: any;
 }
 
-
-
-export interface File {
-    idx: string;             // unique id to identify the uploaded file.
-    idx_user: string;            // user no
-    relation: string;
-    code: string;
-    name: string;           // file name
-    type: string;       // mime type of the file.
-    size: string;           // file size in bytes
-    complete: string;       // y | ''
-    path: string;           // saved file name or save path in server HDD
-    stamp_created: string;  // time of saved
-    stamp_updated: string;  // time of updated.
-    url: string;            // url of the file.
-}
 
 
 
@@ -206,6 +193,22 @@ export interface Sites {
     sites?: Array<Site>;
 }
 
+export interface File {
+    idx: string;             // unique id to identify the uploaded file.
+    idx_user: string;            // user no
+    relation: string;
+    code: string;
+    name: string;           // file name
+    type: string;       // mime type of the file.
+    size: string;           // file size in bytes
+    complete: 'y' | '';       // y | ''
+    path: string;           // saved file name or save path in server HDD
+    url: string;            // url of the file.
+    stamp_created: string;  // time of saved
+    stamp_updated: string;  // time of updated.
+}
+
+export type Files = Array<File>;
 
 
 export interface Post extends Request {
@@ -214,9 +217,14 @@ export interface Post extends Request {
     title?: string;
     content?: string;
     content_stripped?: string;
+    // This will only be available from backend. It must be empty array or undefined when it is sent to the backend.
+    files?: Files;
+    // This is for information backend which files to set to the post.
+    files_idx?: Array<string>;
 }
 
 export type Posts = Array<Post>;
+
 
 
 

@@ -159,6 +159,20 @@ export class SimplestService extends SimplestLibrary {
             return false;
         }
     }
+    /**
+     * Returns login user's idx in string.
+     * @return
+     *  empty string if the user didn't logged in.
+     */
+    get myIdx(): string {
+        const user = this.getUser();
+        // console.log('isLoggedIn() user:', user);
+        if (user && user.idx) {
+            return user.idx;
+        } else {
+            return '';
+        }
+    }
 
     register(user: User): Observable<User> {
         user.run = 'user.register';
@@ -216,6 +230,9 @@ export class SimplestService extends SimplestLibrary {
         const formData = new FormData();
         formData.append('run', 'file.upload');
         formData.append('file', file, file.name);
+        if (options.taxonomy) {
+            formData.append('taxonomy', options.taxonomy);
+        }
         if (options.relation) {
             formData.append('relation', options.relation);
         }
