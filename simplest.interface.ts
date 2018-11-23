@@ -237,6 +237,9 @@ export interface Post extends Request {
 
 export type Posts = Array<Post>;
 
+export type Comment = Post;
+export type Comments = Posts;
+
 
 
 

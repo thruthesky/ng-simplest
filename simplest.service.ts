@@ -177,6 +177,21 @@ export class SimplestService extends SimplestLibrary {
         }
     }
 
+    /**
+     * Returns login user's nickname in string.
+     * @return
+     *  empty string if the user didn't logged in.
+     */
+    get myNickname(): string {
+        const user = this.getUser();
+        // console.log('isLoggedIn() user:', user);
+        if (user && user.nickname) {
+            return user.nickname;
+        } else {
+            return '';
+        }
+    }
+
     register(user: User): Observable<User> {
         user.run = 'user.register';
         return this.post(user).pipe(
