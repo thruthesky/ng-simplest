@@ -234,6 +234,7 @@ export interface Post extends Request {
     files?: Files;
     // This is for information backend which files to set to the post.
     files_idx?: Array<string>;
+    comments?: Array<any>;
 }
 
 export type Posts = Array<Post>;
