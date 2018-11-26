@@ -2,23 +2,23 @@ import { Injectable, Inject } from '@angular/core';
 import { SimplestConfigToken } from './simplest.config';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaderResponse, HttpEventType } from '@angular/common/http';
 import {
-    SimplestConfig,
-    File,
-    FileCreateOptions,
-    Response,
-    FileDeleteOptions,
-    User,
-    UserLogin,
-    UserProfile,
-    Site,
-    Domain,
-    DomainApply,
-    Sites,
-    Categories,
-    Category,
-    PostList,
-    Post,
-    FileImageResize
+  SimplestConfig,
+  File,
+  FileCreateOptions,
+  Response,
+  FileDeleteOptions,
+  User,
+  UserLogin,
+  UserProfile,
+  Site,
+  Domain,
+  DomainApply,
+  Sites,
+  Categories,
+  Category,
+  PostList,
+  Post,
+  FileImageResize, Idx
 } from './simplest.interface';
 import { Observable, throwError } from 'rxjs';
 import { map, filter, catchError, tap } from 'rxjs/operators';
@@ -170,7 +170,7 @@ export class SimplestService extends SimplestLibrary {
      */
     get isLoggedIn(): boolean {
         const user = this.getUser<User>();
-        console.log('isLoggedIn() user:', user);
+        // console.log('isLoggedIn() user:', user);
         if (user && user.session_id) {
             return true;
         } else {
@@ -198,20 +198,6 @@ export class SimplestService extends SimplestLibrary {
         return this.getUser('nickname');
     }
 
-    /**
-     * Returns login user's nickname in string.
-     * @return
-     *  empty string if the user didn't logged in.
-     */
-    get myNickname(): string {
-        const user = this.getUser();
-        // console.log('isLoggedIn() user:', user);
-        if (user && user.nickname) {
-            return user.nickname;
-        } else {
-            return '';
-        }
-    }
 
     register(user: User): Observable<User> {
         user.run = 'user.register';
@@ -439,6 +425,18 @@ export class SimplestService extends SimplestLibrary {
     postGet(idx: any): Observable<Post> {
         const data = {
             run: 'post.get',
+            idx: idx
+        };
+        return this.post(data);
+    }
+
+    postUpdate(data: Post): Observable<Post> {
+      data.run = 'post.update';
+      return this.post(data);
+    }
+    postDelete(idx: any): Observable<Idx> {
+        const data = {
+            run: 'post.delete',
             idx: idx
         };
         return this.post(data);

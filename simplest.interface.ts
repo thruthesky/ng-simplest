@@ -185,10 +185,6 @@ export interface DomainApply extends Request {
 
 
 
-export interface Domain {
-    idx: string;
-}
-
 
 
 export interface SiteGlobalSettings {
@@ -225,12 +221,15 @@ export type Files = Array<File>;
 
 export interface Post extends Request {
     idx?: string;
+    idx_user?: string;
     idx_category?: string;
     taxonomy?: string;
     relation?: any;
     title?: string;
     content?: string;
     content_stripped?: string;
+    stamp_created?: number;
+    stamp_updated?: number;
     // This will only be available from backend. It must be empty array or undefined when it is sent to the backend.
     files?: Files;
     // This is for information backend which files to set to the post.
@@ -242,9 +241,6 @@ export type Posts = Array<Post>;
 export type Comment = Post;
 export type Comments = Posts;
 
-
-
-
 export interface PostList extends Request {
     idx_user?: any;
     idx_category?: string;
@@ -254,3 +250,8 @@ export interface PostList extends Request {
     limit?: number;
     posts?: Array<Post>;
 }
+
+export interface Idx {
+  idx: string;
+}
+
