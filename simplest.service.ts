@@ -114,14 +114,29 @@ export class SimplestService extends SimplestLibrary {
         }
     }
     /**
-     * Returns user response data
+     * Returns user response data or a field or user data.
+     *
+     * @example
+     *  const user = this.getUser<User>();
+     *  cosnt idx = this.getUser('idx');
      */
-    private getUser(): User {
+    private getUser<T>(field = null): T {
         if (this.config.enableLoginToAllSubdomains) {
             const val = cookie.getItem(USER_KEY);
             if (val) {
                 try {
-                    return JSON.parse(val);
+                    const user = JSON.parse(val);
+                    if (user) {
+                        if (field === null) {
+                            return user;
+                        } else if (user[field] !== void 0) {
+                            return user[field];
+                        } else {
+                            return null;
+                        }
+                    } else {
+                        return null;
+                    }
                 } catch {
                     return null;
                 }
@@ -154,7 +169,7 @@ export class SimplestService extends SimplestLibrary {
      * Returns true if user has logged in.
      */
     get isLoggedIn(): boolean {
-        const user = this.getUser();
+        const user = this.getUser<User>();
         console.log('isLoggedIn() user:', user);
         if (user && user.session_id) {
             return true;
@@ -162,19 +177,25 @@ export class SimplestService extends SimplestLibrary {
             return false;
         }
     }
+
     /**
      * Returns login user's idx in string.
      * @return
      *  empty string if the user didn't logged in.
      */
     get myIdx(): string {
-        const user = this.getUser();
+        return this.getUser('idx');
+        // const user = this.getUser();
         // console.log('isLoggedIn() user:', user);
-        if (user && user.idx) {
-            return user.idx;
-        } else {
-            return '';
-        }
+        // if (user && user.idx) {
+        //     return user.idx;
+        // } else {
+        //     return '';
+        // }
+    }
+
+    get myNickname(): string {
+        return this.getUser('nickname');
     }
 
     /**
