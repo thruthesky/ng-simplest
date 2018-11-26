@@ -244,6 +244,7 @@ export type Comments = Posts;
 export interface PostList extends Request {
     idx_user?: any;
     idx_category?: string;
+    slug?: string;
     taxonomy?: string;
     relation?: any;
     page?: number;
