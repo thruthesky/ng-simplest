@@ -2,23 +2,23 @@ import { Injectable, Inject } from '@angular/core';
 import { SimplestConfigToken } from './simplest.config';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaderResponse, HttpEventType } from '@angular/common/http';
 import {
-  SimplestConfig,
-  File,
-  FileCreateOptions,
-  Response,
-  FileDeleteOptions,
-  User,
-  UserLogin,
-  UserProfile,
-  Site,
-  Domain,
-  DomainApply,
-  Sites,
-  Categories,
-  Category,
-  PostList,
-  Post,
-  FileImageResize, Idx
+    SimplestConfig,
+    File,
+    FileCreateOptions,
+    Response,
+    FileDeleteOptions,
+    User,
+    UserLogin,
+    UserProfile,
+    Site,
+    Domain,
+    DomainApply,
+    Sites,
+    Categories,
+    Category,
+    PostList,
+    Post,
+    FileImageResize, Comment
 } from './simplest.interface';
 import { Observable, throwError } from 'rxjs';
 import { map, filter, catchError, tap } from 'rxjs/operators';
@@ -431,15 +431,27 @@ export class SimplestService extends SimplestLibrary {
     }
 
     postUpdate(data: Post): Observable<Post> {
-      data.run = 'post.update';
-      return this.post(data);
+        data.run = 'post.update';
+        return this.post(data);
     }
-    postDelete(idx: any): Observable<Idx> {
+    postDelete(idx: any): Observable<Post> {
         const data = {
             run: 'post.delete',
             idx: idx
         };
         return this.post(data);
+    }
+
+    commentCreate(comment: Comment): Observable<Comment> {
+        comment.run = 'comment.create';
+        return this.post(comment);
+    }
+    commentUpdate(comment: Comment): Observable<Comment> {
+        comment.run = 'comment.update';
+        return this.post(comment);
+    }
+    commentDelete(idx_comment: any): Observable<Comment> {
+        return this.post({ run: 'comment.delete', idx: idx_comment });
     }
 }
 

@@ -239,8 +239,25 @@ export interface Post extends Request {
 
 export type Posts = Array<Post>;
 
-export type Comment = Post;
-export type Comments = Posts;
+
+
+export interface Comment extends Request {
+    idx?: string;
+    readonly idx_root?: string;                 // No to pass to backend.
+    idx_parent?: any;
+    idx_user?: string;
+    content?: string;
+    content_stripped?: string;
+    stamp_created?: number;
+    stamp_updated?: number;
+    // This will only be available from backend. It must be empty array or undefined when it is sent to the backend.
+    files?: Files;
+    // This is for information backend which files to set to the post.
+    files_idx?: Array<string>;
+}
+
+
+export type Comments = Array<Comment>;
 
 export interface PostList extends Request {
     idx_user?: any;
@@ -251,9 +268,5 @@ export interface PostList extends Request {
     page?: number;
     limit?: number;
     posts?: Array<Post>;
-}
-
-export interface Idx {
-  idx: string;
 }
 
