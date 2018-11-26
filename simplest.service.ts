@@ -170,7 +170,7 @@ export class SimplestService extends SimplestLibrary {
      */
     get isLoggedIn(): boolean {
         const user = this.getUser<User>();
-        console.log('isLoggedIn() user:', user);
+        // console.log('isLoggedIn() user:', user);
         if (user && user.session_id) {
             return true;
         } else {
