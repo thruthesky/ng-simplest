@@ -226,6 +226,8 @@ export type Files = Array<File>;
 export interface Post extends Request {
     idx?: string;
     idx_category?: string;
+    taxonomy?: string;
+    relation?: any;
     title?: string;
     content?: string;
     content_stripped?: string;
@@ -241,7 +243,10 @@ export type Posts = Array<Post>;
 
 
 export interface PostList extends Request {
+    idx_user?: any;
     idx_category?: string;
+    taxonomy?: string;
+    relation?: any;
     page?: number;
     limit?: number;
     posts?: Array<Post>;
