@@ -332,8 +332,28 @@ export class SimplestService extends SimplestLibrary {
     }
 
 
-    site(idx_site_or_domain): Observable<Site> {
-        return this.post({ run: 'site.get', idx_site_or_domain: idx_site_or_domain });
+    /**
+     * Load site settings.
+     * @desc This method caches site data info localStorage and you can get it from callback to speed up site loading.
+     * @param idx_site_or_domain idx or domain to load site settings
+     *
+     * @example Getting site data from cache first and loads real data from server.
+        this.sp.site(this.sp.currentDomain(), s => this.site = s).subscribe(s => {
+            this.site = s;
+        }, e => this.error(e));
+     */
+    site(idx_site_or_domain, callback?): Observable<Site> {
+        const run = 'site.get';
+        if (typeof callback === 'function') {
+            const cache = this.get(run);
+            if (cache) {
+                console.log('callback with: ', cache);
+                callback(cache);
+            }
+        }
+        return this.post({ run: run, idx_site_or_domain: idx_site_or_domain }).pipe(
+            tap(x => this.set(run, x))
+        );
     }
 
     siteUpdate(data: Site): Observable<Site> {
