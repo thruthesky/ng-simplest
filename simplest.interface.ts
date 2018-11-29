@@ -230,11 +230,12 @@ export interface Post extends Request {
     content_stripped?: string;
     stamp_created?: number;
     stamp_updated?: number;
+    stamp_deleted?: number;
     // This will only be available from backend. It must be empty array or undefined when it is sent to the backend.
     files?: Files;
     // This is for information backend which files to set to the post.
     files_idx?: Array<string>;
-    comments?: Array<any>;
+    comments?: Comments;
 }
 
 export type Posts = Array<Post>;
@@ -250,10 +251,12 @@ export interface Comment extends Request {
     content_stripped?: string;
     stamp_created?: number;
     stamp_updated?: number;
+    stamp_deleted?: number;
     // This will only be available from backend. It must be empty array or undefined when it is sent to the backend.
     files?: Files;
     // This is for information backend which files to set to the post.
     files_idx?: Array<string>;
+    depth?: string;
 }
 
 
