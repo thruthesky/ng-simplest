@@ -140,7 +140,8 @@ export interface Site extends Request {
     domain?: string;            // Needed to create a site.
     domains?: Array<Domain>;    // Avaiable on response
     name?: string;              // site name
-    author?: string;            // Blog poster/writer name. mostly blog owner's nickname.
+    author?: string;            // poster/writer name. mostly blog owner's nickname.
+    title?: string;             // html title
     description?: string;
     keywords?: string;
     categories?: Categories;
