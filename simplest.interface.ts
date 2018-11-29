@@ -134,13 +134,14 @@ export interface Domain {
 
 
 export interface Site extends Request {
-    idx?: string;               // site.idx
+    idx?: any;               // site.idx
     user_ID?: string;            // Wordpress user ID
     terms_id_in_order?: string;
     domain?: string;            // Needed to create a site.
     domains?: Array<Domain>;    // Avaiable on response
     name?: string;              // site name
-    author?: string;            // Blog poster/writer name. mostly blog owner's nickname.
+    author?: string;            // poster/writer name. mostly blog owner's nickname.
+    title?: string;             // html title
     description?: string;
     keywords?: string;
     categories?: Categories;
