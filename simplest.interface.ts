@@ -148,7 +148,7 @@ export interface Site extends Request {
 
     // HTML for site head.
     // @see https://docs.google.com/document/d/1nOEJVDilLbF0sNCkkRGcDwdT3rDLZp3h59oQ77BIdp4/edit#heading=h.bn3bu2qkurcu
-    head?: string;
+    meta?: string;
 
     //
     favicon_url?: string;        // favicon url
