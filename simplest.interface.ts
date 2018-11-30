@@ -226,6 +226,7 @@ export interface Post extends Request {
     idx_category?: string;
     taxonomy?: string;
     relation?: any;
+    slug?: string;
     title?: string;
     content?: string;
     content_stripped?: string;
