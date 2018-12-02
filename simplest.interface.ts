@@ -108,7 +108,7 @@ export interface FileImageResize extends Request {
 
 
 
-
+export type PostListStyle = '' | 'title+content' | 'title+content+few-comments';
 
 export interface Category extends Request {
     idx?: any;
@@ -116,6 +116,8 @@ export interface Category extends Request {
     relation?: string;
     slug?: string;
     name?: string;
+    list_style?: PostListStyle;
+    posts_per_page?: string;
 }
 export type Categories = Array<Category>;
 

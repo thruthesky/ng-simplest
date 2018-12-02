@@ -347,11 +347,11 @@ export class SimplestService extends SimplestLibrary {
         if (typeof callback === 'function') {
             const cache = this.get(run);
             if (cache) {
-                console.log('callback with: ', cache);
+                // console.log('callback with: ', cache);
                 callback(cache);
             }
         }
-        return this.post({ run: run, idx_site_or_domain: idx_site_or_domain }).pipe(
+        return this.post({ run: run, idx_site_or_domain: idx_site_or_domain, debug: true }).pipe(
             tap(x => this.set(run, x))
         );
     }
@@ -383,6 +383,9 @@ export class SimplestService extends SimplestLibrary {
     }
 
 
+    category(idx_category): Observable<Category> {
+        return this.post({ run: 'category.get', idx_category: idx_category });
+    }
 
     /**
      * @example
