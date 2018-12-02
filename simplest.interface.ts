@@ -145,11 +145,10 @@ export interface Site extends Request {
     description?: string;
     keywords?: string;
     categories?: Categories;
-    meta?: any;
 
     // HTML for site head.
     // @see https://docs.google.com/document/d/1nOEJVDilLbF0sNCkkRGcDwdT3rDLZp3h59oQ77BIdp4/edit#heading=h.bn3bu2qkurcu
-    meta?: string;
+    meta?: any;
 
     //
     favicon_url?: string;        // favicon url
