@@ -260,6 +260,8 @@ export interface Comment extends Request {
     // This is for information backend which files to set to the post.
     files_idx?: Array<string>;
     depth?: string;
+
+    show?: any;     // This exists only on client end to show or not.
 }
 
 
