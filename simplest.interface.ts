@@ -241,6 +241,12 @@ export interface Post extends Request {
     // This is for information backend which files to set to the post.
     files_idx?: Array<string>;
     comments?: Comments;
+
+    /**
+     * Properties below are available only on Angular.
+     */
+    view?: boolean; // to show content or not.
+    viewCommentEditor?: boolean; // To show comment input box or not.
 }
 
 export type Posts = Array<Post>;

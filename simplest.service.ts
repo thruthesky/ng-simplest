@@ -476,6 +476,14 @@ export class SimplestService extends SimplestLibrary {
     commentDelete(idx_comment: any): Observable<Comment> {
         return this.post({ run: 'comment.delete', idx: idx_comment });
     }
+
+
+    /**
+     * Chat functionality
+     */
+    room() {}
+    rooms() {}
+    createRoom() {}
 }
 
 
