@@ -383,8 +383,8 @@ export class SimplestService extends SimplestLibrary {
     }
 
 
-    category(idx_category): Observable<Category> {
-        return this.post({ run: 'category.get', idx_category: idx_category });
+    category(category): Observable<Category> {
+        return this.post({ run: 'category.get', category: category });
     }
 
     /**
