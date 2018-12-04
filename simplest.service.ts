@@ -481,9 +481,11 @@ export class SimplestService extends SimplestLibrary {
     /**
      * Chat functionality
      */
-    room() {}
-    rooms() {}
-    createRoom() {}
+    room() { }
+    rooms(): Observable<any> {
+        return this.post({ run: 'simplest-firebase-chat.rooms' });
+    }
+    createRoom() { }
 }
 
 
