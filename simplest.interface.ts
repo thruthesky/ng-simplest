@@ -247,6 +247,7 @@ export interface Post extends Request {
      */
     view?: boolean; // to show content or not.
     viewCommentEditor?: boolean; // To show comment input box or not.
+    photo: string;
 }
 
 export type Posts = Array<Post>;
@@ -270,6 +271,7 @@ export interface Comment extends Request {
     depth?: string;
 
     show?: any;     // This exists only on client end to show or not.
+    photo: string;
 }
 
 
