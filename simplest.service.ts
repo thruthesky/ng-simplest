@@ -141,7 +141,7 @@ export class SimplestService extends SimplestLibrary {
                     return null;
                 }
             }
-            console.log('Got user from cookie: ', val);
+            // console.log('Got user from cookie: ', val);
         } else {
             return this.get(USER_KEY);
         }
