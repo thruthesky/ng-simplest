@@ -114,7 +114,7 @@ export interface Domain {
 
 export interface Site extends Request {
   idx?: any; // site.idx
-  user_ID?: string; // Wordpress user ID
+  idx_user?: string; // site owner idx.
   terms_id_in_order?: string;
   domain?: string; // Needed to create a site.
   domains?: Array<Domain>; // Avaiable on response

@@ -327,6 +327,8 @@ export class SimplestService extends SimplestLibrary {
     return this.post(options);
   }
 
+
+
   /**
      * Load site settings.
      * @desc This method caches site data info localStorage and you can get it from callback to speed up site loading.
