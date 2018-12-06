@@ -477,6 +477,10 @@ export class SimplestService extends SimplestLibrary {
    * Chat functionality
    */
 
+  room(idx: any): Observable<Room> {
+    return this.post({ run: SPCHAT + 'room', idx: idx });
+  }
+
   rooms(): Observable<Rooms> {
     return this.post({ run: SPCHAT + 'rooms' });
   }
