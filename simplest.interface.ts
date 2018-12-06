@@ -260,22 +260,22 @@ export interface PostList extends Request {
 /**
  * Live Chat Interface
  */
-export interface Room extends Request {
-  idx?: string;
-  idx_user?: string;
-  name?: string;
-  description?: string;
-  reminder?: string;
-  messages?: Message[];
-}
+// export interface Room extends Request {
+//   idx?: string;
+//   idx_user?: string;
+//   name?: string;
+//   description?: string;
+//   reminder?: string;
+//   messages?: Message[];
+// }
 
-export type Rooms = Array<Room>;
+// export type Rooms = Array<Room>;
 
-export interface Message extends Request {
-  idx?: string;
-  idx_chat_room?: string;
-  idx_user?: string;
-  message?: string;
-  type?: string;
-  url?: string;
-}
+// export interface Message extends Request {
+//   idx?: string;
+//   idx_chat_room?: string;
+//   idx_user?: string;
+//   message?: string;
+//   type?: string;
+//   url?: string;
+// }

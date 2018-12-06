@@ -25,10 +25,7 @@ import {
   PostList,
   Post,
   FileImageResize,
-  Comment,
-  Room,
-  Rooms,
-  Message
+  Comment
 } from './simplest.interface';
 import { Observable, throwError } from 'rxjs';
 import { map, filter, catchError, tap } from 'rxjs/operators';
@@ -477,20 +474,20 @@ export class SimplestService extends SimplestLibrary {
    * Chat functionality
    */
 
-  room(idx: any): Observable<Room> {
+  room(idx: any): Observable<any> {
     return this.post({ run: SPCHAT + 'room', idx: idx });
   }
 
-  rooms(): Observable<Rooms> {
+  rooms(): Observable<any> {
     return this.post({ run: SPCHAT + 'rooms' });
   }
 
-  createRoom(room: Room): Observable<Room> {
+  createRoom(room: any): Observable<any> {
     room.run = SPCHAT + 'create-room';
     return this.post(room);
   }
 
-  enterRoom(idx: any): Observable<Room> {
+  enterRoom(idx: any): Observable<any> {
     return this.post({ run: SPCHAT + 'enter-room', idx: idx });
   }
 
@@ -498,8 +495,8 @@ export class SimplestService extends SimplestLibrary {
     return this.post({ run: SPCHAT + 'leave-room', idx: idx });
   }
 
-  sendMessage(message: Message): Observable<Room> {
-    message.run = SPCHAT + 'send-message';
-    return this.post(message);
+  sendMessage(data: any): Observable<any> {
+      data['run'] = SPCHAT + 'send-message';
+    return this.post(data);
   }
 }
