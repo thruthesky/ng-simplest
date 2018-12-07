@@ -60,6 +60,7 @@ export interface User extends Response {
   city?: string;
   address?: string;
   photo?: File;
+  stamp_created?: string;
 }
 
 export interface FileCreateOptions extends Request {
