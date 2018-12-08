@@ -146,8 +146,10 @@ export interface Site extends Request {
   app_icon_url_512?: string; //
   logo_url?: string;
   preview_image_url?: string;
-  desktop_banner_width_image_url?: string; //
-  mobile_banner_width_image_url?: string; //
+  desktop_banner_image_url?: string; //
+  mobile_banner_image_url?: string; //
+  desktop_banner_click_url?: string;
+  mobile_banner_click_url?: string;
   widget_desktop_comments?: 'Y' | '';
   widget_mobile_comments?: 'Y' | '';
   widget_desktop_posts?: 'Y' | '';

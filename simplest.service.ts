@@ -5,7 +5,8 @@ import {
   HttpRequest,
   HttpResponse,
   HttpHeaderResponse,
-  HttpEventType
+  HttpEventType,
+  HttpParams
 } from '@angular/common/http';
 import {
   SimplestConfig,
@@ -50,6 +51,14 @@ export class SimplestService extends SimplestLibrary {
     return this.config.backendUrl;
   }
 
+  html(run, idx_site) {
+    const req = {
+      run: 'html.' + run,
+      idx_site: idx_site
+    };
+    const params = new HttpParams({ fromObject: <any>req });
+    return this.http.get(this.backendUrl, { responseType: 'text', params: params });
+  }
   /**
    *
    * Request to server through POST method.
@@ -498,7 +507,7 @@ export class SimplestService extends SimplestLibrary {
   }
 
   sendMessage(data: any): Observable<any> {
-      data['run'] = SPCHAT + 'send-message';
+    data['run'] = SPCHAT + 'send-message';
     return this.post(data);
   }
 }
