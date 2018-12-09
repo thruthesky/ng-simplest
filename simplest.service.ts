@@ -51,6 +51,11 @@ export class SimplestService extends SimplestLibrary {
     return this.config.backendUrl;
   }
 
+  /**
+   * Returns HTML from backend.
+   * @param run script file name
+   * @param idx_site site.idx
+   */
   html(run, idx_site) {
     const req = {
       run: 'html.' + run,
@@ -388,6 +393,33 @@ export class SimplestService extends SimplestLibrary {
     return this.post(data);
   }
 
+  siteSortCategories(idx, orders) {
+    const data = {
+      run: 'site.sort-categories',
+      idx: idx,
+      orders: orders
+    };
+    return this.post(data);
+  }
+
+  /**
+   * Returns component data from backend.
+   * @see document
+   * @param idx site
+   * @param comp component name
+   */
+  siteComponent(idx, comp) {
+    const data = {
+      run: 'site.components/' + comp,
+      idx: idx,
+      debug: true
+    };
+    console.log('siteComponent: ', data);
+    return this.post(data).pipe(
+      tap( r => console.log('r: ', r))
+    );
+  }
+
   category(category): Observable<Category> {
     return this.post({ run: 'category.get', category: category });
   }
@@ -427,15 +459,6 @@ export class SimplestService extends SimplestLibrary {
     const data = {
       run: 'category.delete',
       idx: idx
-    };
-    return this.post(data);
-  }
-
-  siteSortCategories(idx, orders) {
-    const data = {
-      run: 'site.sort-categories',
-      idx: idx,
-      orders: orders
     };
     return this.post(data);
   }

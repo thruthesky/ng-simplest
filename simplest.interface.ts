@@ -192,7 +192,12 @@ export interface File {
 }
 
 export type Files = Array<File>;
-
+export interface PostUser {
+  idx: string;
+  name: string;
+  stamp_create: string;
+  photo_url: string;
+}
 export interface Post extends Request {
   idx?: string;
   idx_user?: string;
@@ -219,9 +224,11 @@ export interface Post extends Request {
   view?: boolean; // to show content or not.
   viewCommentEditor?: boolean; // To show comment input box or not.
   name?: string;
-  nickname?: string;
-  photo?: string;
+  // nickname?: string;
+  // photo?: string;
+  user: PostUser;
 }
+
 
 export type Posts = Array<Post>;
 
