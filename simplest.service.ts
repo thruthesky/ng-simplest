@@ -580,10 +580,10 @@ export class SimplestService extends SimplestLibrary {
       return '';
     }
     const path = url.substr( url.indexOf('/files/') );
-    console.log('path: ', path);
+    // console.log('path: ', path);
     url = `${this.backendHomeUrl}etc/thumbnail/?src=../..${path}&width=${options.width}&height=${options.height}`
       + `&quality=${options.quality}&mode=${options.mode}`;
-    console.log('url: ', url);
+    // console.log('url: ', url);
     return url;
   }
 }
