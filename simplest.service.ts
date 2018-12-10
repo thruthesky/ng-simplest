@@ -413,9 +413,7 @@ export class SimplestService extends SimplestLibrary {
       debug: true
     };
     console.log('siteComponent: ', data);
-    return this.post(data).pipe(
-      tap( r => console.log('r: ', r))
-    );
+    return this.post(data).pipe(tap(r => console.log('r: ', r)));
   }
 
   category(category): Observable<Category> {
@@ -549,9 +547,9 @@ export class SimplestService extends SimplestLibrary {
 
   /**
    * will retrieve all message in this room.
-   * @param idx reference to room id.
+   * @param name reference to room.
    */
-  allMessage(idx: any) {
-    return this.post({ run: SPCHAT + 'all-message', idx: idx });
+  allMessage(name: any) {
+    return this.post({ run: SPCHAT + 'all-message', name: name });
   }
 }
