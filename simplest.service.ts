@@ -50,6 +50,9 @@ export class SimplestService extends SimplestLibrary {
   get backendUrl() {
     return this.config.backendUrl;
   }
+  get backendHomeUrl(): string {
+    return this.backendUrl.replace('api.php', '');
+  }
 
   /**
    * Returns HTML from backend.
@@ -341,8 +344,6 @@ export class SimplestService extends SimplestLibrary {
     return this.post(options);
   }
 
-
-
   /**
      * Load site settings.
      * @desc This method caches site data info localStorage and you can get it from callback to speed up site loading.
@@ -415,9 +416,7 @@ export class SimplestService extends SimplestLibrary {
       debug: true
     };
     console.log('siteComponent: ', data);
-    return this.post(data).pipe(
-      tap( r => console.log('r: ', r))
-    );
+    return this.post(data).pipe(tap(r => console.log('r: ', r)));
   }
 
   category(category): Observable<Category> {
@@ -508,29 +507,83 @@ export class SimplestService extends SimplestLibrary {
    * Chat functionality
    */
 
+  /**
+   * will retrive a room matching the idx.
+   * @param idx reference to a room.
+   */
   room(idx: any): Observable<any> {
     return this.post({ run: SPCHAT + 'room', idx: idx });
   }
 
+  /**
+   * get all rooms
+   */
   rooms(): Observable<any> {
     return this.post({ run: SPCHAT + 'rooms' });
   }
 
+  /**
+   * will insert room in simplest db
+   * @param room data to be store in simplest.
+   */
   createRoom(room: any): Observable<any> {
     room.run = SPCHAT + 'create-room';
     return this.post(room);
   }
 
-  enterRoom(idx: any): Observable<any> {
-    return this.post({ run: SPCHAT + 'enter-room', idx: idx });
-  }
+  // enterRoom(idx: any): Observable<any> {
+  //   return this.post({ run: SPCHAT + 'enter-room', idx: idx });
+  // }
 
-  leaveRoom(idx: any) {
-    return this.post({ run: SPCHAT + 'leave-room', idx: idx });
-  }
+  // leaveRoom(idx: any) {
+  //   return this.post({ run: SPCHAT + 'leave-room', idx: idx });
+  // }
 
+  /**
+   * will store message in simplest db.
+   * @param data data to be store in simplest.
+   */
   sendMessage(data: any): Observable<any> {
     data['run'] = SPCHAT + 'send-message';
     return this.post(data);
+  }
+
+  /**
+   * will retrieve all message in this room.
+   * @param name reference to room.
+   */
+  allMessage(name: any) {
+    return this.post({ run: SPCHAT + 'all-message', name: name });
+  }
+
+
+
+
+
+  /**
+   * Returns thumbnail URL
+   * @param fileOrUrl file object or url of the image.
+   * @see etc/thumbnail/index.php for detail
+   */
+  thumbnailUrl(fileOrUrl: any, options: { width?: number, height?: number, quality?: number, mode?: 'resize' | 'crop'  } = {}): string {
+    if ( ! fileOrUrl ) {
+      return '';
+    }
+    const defaults = { width: 120, height: 120, quality: 80, mode: 'crop' };
+    options = Object.assign(defaults, options);
+    let url: string;
+    if ( typeof fileOrUrl === 'string' ) {
+      url = fileOrUrl;
+    } else if ( fileOrUrl['url'] !== void 0 ) {
+      url = fileOrUrl['url'];
+    } else {
+      return '';
+    }
+    const path = url.substr( url.indexOf('/files/') );
+    // console.log('path: ', path);
+    url = `${this.backendHomeUrl}etc/thumbnail/?src=../..${path}&width=${options.width}&height=${options.height}`
+      + `&quality=${options.quality}&mode=${options.mode}`;
+    // console.log('url: ', url);
+    return url;
   }
 }

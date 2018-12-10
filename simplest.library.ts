@@ -1,4 +1,4 @@
-import { ErrorObject } from './simplest.interface';
+import { ErrorObject, Post } from './simplest.interface';
 
 export class SimplestLibrary {
 
@@ -152,5 +152,23 @@ export class SimplestLibrary {
     set(key, data): void {
         localStorage.setItem(key, JSON.stringify(data));
     }
+
+
+    /**
+     * Returns a url of post photo.
+     * @param post post to get image url from
+     * @param n Get n'th image url
+     */
+    postPhotoUrl(post: Post, n: number = 0): string {
+        if (post && post.files && post.files[n] !== void 0 && post.files[n]['url'] !== void 0 ) {
+            return post.files[0]['url'];
+        } else {
+            return null;
+        }
+    }
+
+
+
+
 
 }
