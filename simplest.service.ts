@@ -327,8 +327,6 @@ export class SimplestService extends SimplestLibrary {
     return this.post(options);
   }
 
-
-
   /**
      * Load site settings.
      * @desc This method caches site data info localStorage and you can get it from callback to speed up site loading.
@@ -476,29 +474,52 @@ export class SimplestService extends SimplestLibrary {
    * Chat functionality
    */
 
+  /**
+   * will retrive a room matching the idx.
+   * @param idx reference to a room.
+   */
   room(idx: any): Observable<any> {
     return this.post({ run: SPCHAT + 'room', idx: idx });
   }
 
+  /**
+   * get all rooms
+   */
   rooms(): Observable<any> {
     return this.post({ run: SPCHAT + 'rooms' });
   }
 
+  /**
+   * will insert room in simplest db
+   * @param room data to be store in simplest.
+   */
   createRoom(room: any): Observable<any> {
     room.run = SPCHAT + 'create-room';
     return this.post(room);
   }
 
-  enterRoom(idx: any): Observable<any> {
-    return this.post({ run: SPCHAT + 'enter-room', idx: idx });
-  }
+  // enterRoom(idx: any): Observable<any> {
+  //   return this.post({ run: SPCHAT + 'enter-room', idx: idx });
+  // }
 
-  leaveRoom(idx: any) {
-    return this.post({ run: SPCHAT + 'leave-room', idx: idx });
-  }
+  // leaveRoom(idx: any) {
+  //   return this.post({ run: SPCHAT + 'leave-room', idx: idx });
+  // }
 
+  /**
+   * will store message in simplest db.
+   * @param data data to be store in simplest.
+   */
   sendMessage(data: any): Observable<any> {
-      data['run'] = SPCHAT + 'send-message';
+    data['run'] = SPCHAT + 'send-message';
     return this.post(data);
+  }
+
+  /**
+   * will retrieve all message in this room.
+   * @param idx reference to room id.
+   */
+  allMessage(idx: any) {
+    return this.post({ run: SPCHAT + 'all-message', idx: idx });
   }
 }
