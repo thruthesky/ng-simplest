@@ -146,8 +146,10 @@ export interface Site extends Request {
   app_icon_url_512?: string; //
   logo_url?: string;
   preview_image_url?: string;
-  desktop_banner_width_image_url?: string; //
-  mobile_banner_width_image_url?: string; //
+  desktop_banner_image_url?: string; //
+  mobile_banner_image_url?: string; //
+  desktop_banner_click_url?: string;
+  mobile_banner_click_url?: string;
   widget_desktop_comments?: 'Y' | '';
   widget_mobile_comments?: 'Y' | '';
   widget_desktop_posts?: 'Y' | '';
@@ -190,7 +192,12 @@ export interface File {
 }
 
 export type Files = Array<File>;
-
+export interface PostUser {
+  idx: string;
+  name: string;
+  stamp_create: string;
+  photo_url: string;
+}
 export interface Post extends Request {
   idx?: string;
   idx_user?: string;
@@ -217,9 +224,11 @@ export interface Post extends Request {
   view?: boolean; // to show content or not.
   viewCommentEditor?: boolean; // To show comment input box or not.
   name?: string;
-  nickname?: string;
-  photo?: string;
+  // nickname?: string;
+  // photo?: string;
+  user?: PostUser;
 }
+
 
 export type Posts = Array<Post>;
 
