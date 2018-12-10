@@ -50,6 +50,9 @@ export class SimplestService extends SimplestLibrary {
   get backendUrl() {
     return this.config.backendUrl;
   }
+  get backendHomeUrl(): string {
+    return this.backendUrl.replace('api.php', '');
+  }
 
   /**
    * Returns HTML from backend.
@@ -339,6 +342,33 @@ export class SimplestService extends SimplestLibrary {
   fileImageResize(options: FileImageResize): Observable<File> {
     options.run = 'file.image-resize';
     return this.post(options);
+  }
+
+  /**
+   * Returns thumbnail URL
+   * @param fileOrUrl file object or url of the image.
+   * @see etc/thumbnail/index.php for detail
+   */
+  thumbnailUrl(fileOrUrl: any, options: { width?: number, height?: number, quality?: number, mode?: 'resize' | 'crop'  } = {}): string {
+    if ( ! fileOrUrl ) {
+      return '';
+    }
+    const defaults = { width: 120, height: 120, quality: 80, mode: 'crop' };
+    options = Object.assign(defaults, options);
+    let url: string;
+    if ( typeof fileOrUrl === 'string' ) {
+      url = fileOrUrl;
+    } else if ( fileOrUrl['url'] !== void 0 ) {
+      url = fileOrUrl['url'];
+    } else {
+      return '';
+    }
+    const path = url.substr( url.indexOf('/files/') );
+    console.log('path: ', path);
+    url = `${this.backendHomeUrl}etc/thumbnail/?src=../..${path}&width=${options.width}&height=${options.height}`
+      + `&quality=${options.quality}&mode=${options.mode}`;
+    console.log('url: ', url);
+    return url;
   }
 
 
