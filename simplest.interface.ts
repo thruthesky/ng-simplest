@@ -226,7 +226,7 @@ export interface Post extends Request {
   name?: string;
   // nickname?: string;
   // photo?: string;
-  user: PostUser;
+  user?: PostUser;
 }
 
 
