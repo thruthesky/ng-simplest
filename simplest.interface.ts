@@ -60,6 +60,7 @@ export interface User extends Response {
   city?: string;
   address?: string;
   photo?: File;
+  stamp_created?: string;
 }
 
 export interface FileCreateOptions extends Request {
@@ -114,11 +115,11 @@ export interface Domain {
 
 export interface Site extends Request {
   idx?: any; // site.idx
-  idx_user?: any;
   user_ID?: string; // Wordpress user ID
+  idx_user?: string; // site owner idx.
   terms_id_in_order?: string;
   domain?: string; // Needed to create a site.
-  domains?: Array<Domain>; // Avaiable on response
+  domains?: Array<Domain>; // Available on response
   name?: string; // site name
   author?: string; // poster/writer name. mostly blog owner's nickname.
   title?: string; // html title
@@ -146,8 +147,10 @@ export interface Site extends Request {
   app_icon_url_512?: string; //
   logo_url?: string;
   preview_image_url?: string;
-  desktop_banner_width_image_url?: string; //
-  mobile_banner_width_image_url?: string; //
+  desktop_banner_image_url?: string; //
+  mobile_banner_image_url?: string; //
+  desktop_banner_click_url?: string;
+  mobile_banner_click_url?: string;
   widget_desktop_comments?: 'Y' | '';
   widget_mobile_comments?: 'Y' | '';
   widget_desktop_posts?: 'Y' | '';
@@ -190,7 +193,12 @@ export interface File {
 }
 
 export type Files = Array<File>;
-
+export interface PostUser {
+  idx: string;
+  name: string;
+  stamp_create: string;
+  photo_url: string;
+}
 export interface Post extends Request {
   idx?: string;
   idx_user?: string;
@@ -217,9 +225,11 @@ export interface Post extends Request {
   view?: boolean; // to show content or not.
   viewCommentEditor?: boolean; // To show comment input box or not.
   name?: string;
-  nickname?: string;
-  photo?: string;
+  // nickname?: string;
+  // photo?: string;
+  user?: PostUser;
 }
+
 
 export type Posts = Array<Post>;
 
@@ -261,22 +271,22 @@ export interface PostList extends Request {
 /**
  * Live Chat Interface
  */
-export interface Room extends Request {
-  idx?: string;
-  idx_user?: string;
-  name?: string;
-  description?: string;
-  reminder?: string;
-  messages?: Message[];
-}
+// export interface Room extends Request {
+//   idx?: string;
+//   idx_user?: string;
+//   name?: string;
+//   description?: string;
+//   reminder?: string;
+//   messages?: Message[];
+// }
 
-export type Rooms = Array<Room>;
+// export type Rooms = Array<Room>;
 
-export interface Message extends Request {
-  idx?: string;
-  idx_chat_room?: string;
-  idx_user?: string;
-  message?: string;
-  type?: string;
-  url?: string;
-}
+// export interface Message extends Request {
+//   idx?: string;
+//   idx_chat_room?: string;
+//   idx_user?: string;
+//   message?: string;
+//   type?: string;
+//   url?: string;
+// }

@@ -5,7 +5,8 @@ import {
   HttpRequest,
   HttpResponse,
   HttpHeaderResponse,
-  HttpEventType
+  HttpEventType,
+  HttpParams
 } from '@angular/common/http';
 import {
   SimplestConfig,
@@ -25,10 +26,7 @@ import {
   PostList,
   Post,
   FileImageResize,
-  Comment,
-  Room,
-  Rooms,
-  Message
+  Comment
 } from './simplest.interface';
 import { Observable, throwError } from 'rxjs';
 import { map, filter, catchError, tap } from 'rxjs/operators';
@@ -53,6 +51,19 @@ export class SimplestService extends SimplestLibrary {
     return this.config.backendUrl;
   }
 
+  /**
+   * Returns HTML from backend.
+   * @param run script file name
+   * @param idx_site site.idx
+   */
+  html(run, idx_site) {
+    const req = {
+      run: 'html.' + run,
+      idx_site: idx_site
+    };
+    const params = new HttpParams({ fromObject: <any>req });
+    return this.http.get(this.backendUrl, { responseType: 'text', params: params });
+  }
   /**
    *
    * Request to server through POST method.
@@ -330,6 +341,8 @@ export class SimplestService extends SimplestLibrary {
     return this.post(options);
   }
 
+
+
   /**
      * Load site settings.
      * @desc This method caches site data info localStorage and you can get it from callback to speed up site loading.
@@ -380,6 +393,33 @@ export class SimplestService extends SimplestLibrary {
     return this.post(data);
   }
 
+  siteSortCategories(idx, orders) {
+    const data = {
+      run: 'site.sort-categories',
+      idx: idx,
+      orders: orders
+    };
+    return this.post(data);
+  }
+
+  /**
+   * Returns component data from backend.
+   * @see document
+   * @param idx site
+   * @param comp component name
+   */
+  siteComponent(idx, comp) {
+    const data = {
+      run: 'site.components/' + comp,
+      idx: idx,
+      debug: true
+    };
+    console.log('siteComponent: ', data);
+    return this.post(data).pipe(
+      tap( r => console.log('r: ', r))
+    );
+  }
+
   category(category): Observable<Category> {
     return this.post({ run: 'category.get', category: category });
   }
@@ -419,15 +459,6 @@ export class SimplestService extends SimplestLibrary {
     const data = {
       run: 'category.delete',
       idx: idx
-    };
-    return this.post(data);
-  }
-
-  siteSortCategories(idx, orders) {
-    const data = {
-      run: 'site.sort-categories',
-      idx: idx,
-      orders: orders
     };
     return this.post(data);
   }
@@ -477,20 +508,20 @@ export class SimplestService extends SimplestLibrary {
    * Chat functionality
    */
 
-  room(idx: any): Observable<Room> {
+  room(idx: any): Observable<any> {
     return this.post({ run: SPCHAT + 'room', idx: idx });
   }
 
-  rooms(): Observable<Rooms> {
+  rooms(): Observable<any> {
     return this.post({ run: SPCHAT + 'rooms' });
   }
 
-  createRoom(room: Room): Observable<Room> {
+  createRoom(room: any): Observable<any> {
     room.run = SPCHAT + 'create-room';
     return this.post(room);
   }
 
-  enterRoom(idx: any): Observable<Room> {
+  enterRoom(idx: any): Observable<any> {
     return this.post({ run: SPCHAT + 'enter-room', idx: idx });
   }
 
@@ -498,8 +529,8 @@ export class SimplestService extends SimplestLibrary {
     return this.post({ run: SPCHAT + 'leave-room', idx: idx });
   }
 
-  sendMessage(message: Message): Observable<Room> {
-    message.run = SPCHAT + 'send-message';
-    return this.post(message);
+  sendMessage(data: any): Observable<any> {
+    data['run'] = SPCHAT + 'send-message';
+    return this.post(data);
   }
 }
