@@ -28,17 +28,28 @@ import {
   FileImageResize,
   Comment
 } from './simplest.interface';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { map, filter, catchError, tap } from 'rxjs/operators';
 
 import { docCookies as cookie } from './simple.cookie';
 import { SimplestLibrary } from './simplest.library';
 
 const USER_KEY = '_user';
+const SITE_KEY = '_site';
 const SPCHAT = 'simplest-firebase-chat.';
 
 @Injectable()
 export class SimplestService extends SimplestLibrary {
+
+
+  /**
+   * System settings.
+   * @desc It is updated on every site.get/site.update
+   * @desc You may need to call site.get on boot to set/save the site info from backend.
+   */
+  siteSettings: Site = {};
+  siteEvent = new BehaviorSubject<Site>(null);
+
   constructor(
     private http: HttpClient,
     @Inject(SimplestConfigToken) private config: SimplestConfig
@@ -355,22 +366,32 @@ export class SimplestService extends SimplestLibrary {
         }, e => this.error(e));
      */
   site(idx_site_or_domain, callback?): Observable<Site> {
-    const run = 'site.get';
     if (typeof callback === 'function') {
-      const cache = this.get(run);
+      const cache = this.get(SITE_KEY);
       if (cache) {
         // console.log('callback with: ', cache);
+        this.siteSettings = cache;
         callback(cache);
       }
     }
-    return this.post({ run: run, idx_site_or_domain: idx_site_or_domain, debug: true }).pipe(
-      tap(x => this.set(run, x))
+    return this.post({ run: 'site.get', idx_site_or_domain: idx_site_or_domain, debug: true }).pipe(
+      tap(s => {
+        this.siteSettings = s;
+        this.set(SITE_KEY, s);
+        this.siteEvent.next(s);
+      })
     );
   }
 
   siteUpdate(data: Site): Observable<Site> {
     data.run = 'site.update';
-    return this.post(data);
+    return this.post(data).pipe(
+      tap(s => {
+        this.siteSettings = s;
+        this.set(SITE_KEY, s);
+        this.siteEvent.next(s);
+      })
+    );
   }
 
   sites(): Observable<Sites> {
@@ -416,7 +437,7 @@ export class SimplestService extends SimplestLibrary {
       debug: true
     };
     console.log('siteComponent: ', data);
-    return this.post(data).pipe(tap(r => console.log('r: ', r)));
+    return this.post(data); // .pipe(tap(r => console.log('r: ', r)));
   }
 
   category(category): Observable<Category> {
@@ -565,21 +586,21 @@ export class SimplestService extends SimplestLibrary {
    * @param fileOrUrl file object or url of the image.
    * @see etc/thumbnail/index.php for detail
    */
-  thumbnailUrl(fileOrUrl: any, options: { width?: number, height?: number, quality?: number, mode?: 'resize' | 'crop'  } = {}): string {
-    if ( ! fileOrUrl ) {
+  thumbnailUrl(fileOrUrl: any, options: { width?: number, height?: number, quality?: number, mode?: 'resize' | 'crop' } = {}): string {
+    if (!fileOrUrl) {
       return '';
     }
     const defaults = { width: 120, height: 120, quality: 80, mode: 'crop' };
     options = Object.assign(defaults, options);
     let url: string;
-    if ( typeof fileOrUrl === 'string' ) {
+    if (typeof fileOrUrl === 'string') {
       url = fileOrUrl;
-    } else if ( fileOrUrl['url'] !== void 0 ) {
+    } else if (fileOrUrl['url'] !== void 0) {
       url = fileOrUrl['url'];
     } else {
       return '';
     }
-    const path = url.substr( url.indexOf('/files/') );
+    const path = url.substr(url.indexOf('/files/'));
     // console.log('path: ', path);
     url = `${this.backendHomeUrl}etc/thumbnail/?src=../..${path}&width=${options.width}&height=${options.height}`
       + `&quality=${options.quality}&mode=${options.mode}`;
