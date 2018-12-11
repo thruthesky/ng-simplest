@@ -544,45 +544,47 @@ export class SimplestService extends SimplestLibrary {
    * @param data data to be store in simplest.
    */
   sendMessage(data: any): Observable<any> {
-    data['run'] = SPCHAT + 'send-message';
+    data.run = SPCHAT + 'send-message';
     return this.post(data);
   }
 
   /**
    * will retrieve all message in this room.
-   * @param name reference to room.
+   * @param room data object, must contain 'name', optional 'page' & 'limit.
    */
-  allMessage(name: any) {
-    return this.post({ run: SPCHAT + 'all-message', name: name });
+  allMessage(room: any) {
+    room.run = SPCHAT + 'all-message';
+    return this.post(room);
   }
-
-
-
-
 
   /**
    * Returns thumbnail URL
    * @param fileOrUrl file object or url of the image.
    * @see etc/thumbnail/index.php for detail
    */
-  thumbnailUrl(fileOrUrl: any, options: { width?: number, height?: number, quality?: number, mode?: 'resize' | 'crop'  } = {}): string {
-    if ( ! fileOrUrl ) {
+  thumbnailUrl(
+    fileOrUrl: any,
+    options: { width?: number; height?: number; quality?: number; mode?: 'resize' | 'crop' } = {}
+  ): string {
+    if (!fileOrUrl) {
       return '';
     }
     const defaults = { width: 120, height: 120, quality: 80, mode: 'crop' };
     options = Object.assign(defaults, options);
     let url: string;
-    if ( typeof fileOrUrl === 'string' ) {
+    if (typeof fileOrUrl === 'string') {
       url = fileOrUrl;
-    } else if ( fileOrUrl['url'] !== void 0 ) {
+    } else if (fileOrUrl['url'] !== void 0) {
       url = fileOrUrl['url'];
     } else {
       return '';
     }
-    const path = url.substr( url.indexOf('/files/') );
+    const path = url.substr(url.indexOf('/files/'));
     // console.log('path: ', path);
-    url = `${this.backendHomeUrl}etc/thumbnail/?src=../..${path}&width=${options.width}&height=${options.height}`
-      + `&quality=${options.quality}&mode=${options.mode}`;
+    url =
+      `${this.backendHomeUrl}etc/thumbnail/?src=../..${path}&width=${options.width}&height=${
+        options.height
+      }` + `&quality=${options.quality}&mode=${options.mode}`;
     // console.log('url: ', url);
     return url;
   }
