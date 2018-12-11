@@ -532,22 +532,25 @@ export class SimplestService extends SimplestLibrary {
    * will retrive a room matching the idx.
    * @param idx reference to a room.
    */
-  room(idx: any): Observable<any> {
+  chatRoom(idx: any): Observable<any> {
     return this.post({ run: SPCHAT + 'room', idx: idx });
   }
 
   /**
-   * get all rooms
+   * get all rooms of a site
    */
-  rooms(): Observable<any> {
-    return this.post({ run: SPCHAT + 'rooms' });
+  chatRooms(idx_site, limit = 100): Observable<any> {
+    if ( ! idx_site ) {
+      return throwError( this.createError( 'no_idx_iste', 'idx site is not provided. empty') );
+    }
+    return this.post({ run: SPCHAT + 'rooms', idx_site: idx_site, limit: limit });
   }
 
   /**
    * will insert room in simplest db
    * @param room data to be store in simplest.
    */
-  createRoom(room: any): Observable<any> {
+  chatCreateRoom(room: any): Observable<any> {
     room.run = SPCHAT + 'create-room';
     return this.post(room);
   }
@@ -564,7 +567,7 @@ export class SimplestService extends SimplestLibrary {
    * will store message in simplest db.
    * @param data data to be store in simplest.
    */
-  sendMessage(data: any): Observable<any> {
+  chatSendMessage(data: any): Observable<any> {
     data.run = SPCHAT + 'send-message';
     return this.post(data);
   }
@@ -573,7 +576,7 @@ export class SimplestService extends SimplestLibrary {
    * will retrieve all message in this room.
    * @param room data object, must contain 'name', optional 'page' & 'limit.
    */
-  allMessage(room: any) {
+  chatAllMessage(room: any) {
     room.run = SPCHAT + 'all-message';
     return this.post(room);
   }
