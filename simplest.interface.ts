@@ -264,7 +264,7 @@ export interface PostList extends Request {
   taxonomy?: string;
   relation?: any;
   page?: number;
-  limit?: number;
+  limit?: any;
   posts?: Array<Post>;
 }
 
