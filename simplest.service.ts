@@ -259,6 +259,11 @@ export class SimplestService extends SimplestLibrary {
     return this.post(user).pipe(tap(res => this.setUser(res)));
   }
 
+  file(options: { idx?; taxonomy?; relation?; code? }): Observable<File> {
+    options['run'] = 'file.get';
+    return this.post(options);
+  }
+
   /**
    * Uploads a file using Custom API
    * @desc I cannot understand wordpress Media API. so I impementing my own file upload api.
@@ -425,17 +430,14 @@ export class SimplestService extends SimplestLibrary {
   /**
    * Returns component data from backend.
    * @see document
-   * @param idx site
    * @param comp component name
+   * @param options options
+   *  options['idx'] must be site.idx
    */
-  siteComponent(idx, comp) {
-    const data = {
-      run: 'site.components/' + comp,
-      idx: idx,
-      debug: true
-    };
-    console.log('siteComponent: ', data);
-    return this.post(data); // .pipe(tap(r => console.log('r: ', r)));
+  siteComponent(comp, options) {
+    options['run'] = 'site.components/' + comp;
+    console.log('siteComponent: ', options);
+    return this.post(options); // .pipe(tap(r => console.log('r: ', r)));
   }
 
   category(category): Observable<Category> {

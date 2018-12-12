@@ -263,6 +263,7 @@ export interface PostList extends Request {
   slug?: string;
   taxonomy?: string;
   relation?: any;
+  where?: string; // costum SQL where query.
   page?: number;
   limit?: any;
   posts?: Array<Post>;
