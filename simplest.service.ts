@@ -170,7 +170,7 @@ export class SimplestService extends SimplestLibrary {
           } else {
             return null;
           }
-        } catch {
+        } catch (e) {
           return null;
         }
       }
