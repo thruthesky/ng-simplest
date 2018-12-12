@@ -261,6 +261,12 @@ export class SimplestService extends SimplestLibrary {
     return this.post(user).pipe(tap(res => this.setUser(res)));
   }
 
+
+  file(options: { idx?, taxonomy?, relation?, code?}): Observable<File> {
+    options['run'] = 'file.get';
+    return this.post(options);
+  }
+
   /**
    * Uploads a file using Custom API
    * @desc I cannot understand wordpress Media API. so I impementing my own file upload api.
@@ -537,8 +543,8 @@ export class SimplestService extends SimplestLibrary {
    * get all rooms of a site
    */
   chatRooms(idx_site, limit = 100): Observable<any> {
-    if ( ! idx_site ) {
-      return throwError( this.createError( 'no_idx_iste', 'idx site is not provided. empty') );
+    if (!idx_site) {
+      return throwError(this.createError('no_idx_iste', 'idx site is not provided. empty'));
     }
     return this.post({ run: SPCHAT + 'rooms', idx_site: idx_site, limit: limit });
   }
@@ -601,7 +607,7 @@ export class SimplestService extends SimplestLibrary {
     // console.log('path: ', path);
     url =
       `${this.backendHomeUrl}etc/thumbnail/?src=../..${path}&width=${options.width}&height=${
-        options.height
+      options.height
       }` + `&quality=${options.quality}&mode=${options.mode}`;
     // console.log('url: ', url);
     return url;
