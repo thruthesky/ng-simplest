@@ -40,8 +40,6 @@ const SPCHAT = 'simplest-firebase-chat.';
 
 @Injectable()
 export class SimplestService extends SimplestLibrary {
-
-
   /**
    * System settings.
    * @desc It is updated on every site.get/site.update
@@ -529,43 +527,21 @@ export class SimplestService extends SimplestLibrary {
    */
 
   /**
-   * will retrive a room matching the idx.
-   * @param idx reference to a room.
+   * @desc will return 100 rooms by default.
+   * @param data object that must contain:
+   * - Required : idx_site.
+   * - Optional : limit, page.
    */
-  chatRoom(idx: any): Observable<any> {
-    return this.post({ run: SPCHAT + 'room', idx: idx });
+  chatRooms(data): Observable<any> {
+    data.run = SPCHAT + 'rooms';
+    return this.post(data);
   }
 
   /**
-   * get all rooms of a site
-   */
-  chatRooms(idx_site, limit = 100): Observable<any> {
-    if ( ! idx_site ) {
-      return throwError( this.createError( 'no_idx_iste', 'idx site is not provided. empty') );
-    }
-    return this.post({ run: SPCHAT + 'rooms', idx_site: idx_site, limit: limit });
-  }
-
-  /**
-   * will insert room in simplest db
-   * @param room data to be store in simplest.
-   */
-  chatCreateRoom(room: any): Observable<any> {
-    room.run = SPCHAT + 'create-room';
-    return this.post(room);
-  }
-
-  // enterRoom(idx: any): Observable<any> {
-  //   return this.post({ run: SPCHAT + 'enter-room', idx: idx });
-  // }
-
-  // leaveRoom(idx: any) {
-  //   return this.post({ run: SPCHAT + 'leave-room', idx: idx });
-  // }
-
-  /**
-   * will store message in simplest db.
-   * @param data data to be store in simplest.
+   * @desc will return idx_chat_room & idx_chat_message.
+   * @param data object to be store in simplest.
+   * - Required : message, status, name, idx_site.
+   * - Note : it will create a room only if room doesn't exists in simplest backend.
    */
   chatSendMessage(data: any): Observable<any> {
     data.run = SPCHAT + 'send-message';
@@ -573,12 +549,14 @@ export class SimplestService extends SimplestLibrary {
   }
 
   /**
-   * will retrieve all message in this room.
-   * @param room data object, must contain 'name', optional 'page' & 'limit.
+   * @desc will retrieve 20 messages by default.
+   * @param data object that must contain:
+   * - Required : name.
+   * - Optional : limit, page.
    */
-  chatAllMessage(room: any) {
-    room.run = SPCHAT + 'all-message';
-    return this.post(room);
+  chatAllMessage(data: any) {
+    data.run = SPCHAT + 'all-message';
+    return this.post(data);
   }
 
   /**
@@ -586,7 +564,10 @@ export class SimplestService extends SimplestLibrary {
    * @param fileOrUrl file object or url of the image.
    * @see etc/thumbnail/index.php for detail
    */
-  thumbnailUrl(fileOrUrl: any, options: { width?: number, height?: number, quality?: number, mode?: 'resize' | 'crop' } = {}): string {
+  thumbnailUrl(
+    fileOrUrl: any,
+    options: { width?: number; height?: number; quality?: number; mode?: 'resize' | 'crop' } = {}
+  ): string {
     if (!fileOrUrl) {
       return '';
     }
