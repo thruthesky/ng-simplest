@@ -427,17 +427,14 @@ export class SimplestService extends SimplestLibrary {
   /**
    * Returns component data from backend.
    * @see document
-   * @param idx site
    * @param comp component name
+   * @param options options
+   *  options['idx'] must be site.idx
    */
-  siteComponent(idx, comp) {
-    const data = {
-      run: 'site.components/' + comp,
-      idx: idx,
-      debug: true
-    };
-    console.log('siteComponent: ', data);
-    return this.post(data); // .pipe(tap(r => console.log('r: ', r)));
+  siteComponent(comp, options) {
+    options['run'] = 'site.components/' + comp;
+    console.log('siteComponent: ', options);
+    return this.post(options); // .pipe(tap(r => console.log('r: ', r)));
   }
 
   category(category): Observable<Category> {
