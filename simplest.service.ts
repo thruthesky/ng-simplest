@@ -539,6 +539,7 @@ export class SimplestService extends SimplestLibrary {
     return this.post(data);
   }
 
+
   /**
    * @desc will return idx_chat_room & idx_chat_message.
    * @param data object to be store in simplest.
