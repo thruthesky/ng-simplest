@@ -553,8 +553,9 @@ export class SimplestService extends SimplestLibrary {
   /**
    * @desc will retrieve 20 messages by default.
    * @param data object that must contain:
-   * - Required : name.
+   * - Required : name, idx_site.
    * - Optional : limit, page.
+   * - Note : it will create a room only if room doesn't exists in simplest backend.
    */
   chatAllMessage(data: any) {
     data.run = SPCHAT + 'all-message';
