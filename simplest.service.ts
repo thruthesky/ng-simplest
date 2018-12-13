@@ -539,11 +539,11 @@ export class SimplestService extends SimplestLibrary {
     return this.post(data);
   }
 
-
   /**
    * @desc will return idx_chat_room & idx_chat_message.
    * @param data object to be store in simplest.
-   * - Required : message, status, name, idx_site.
+   * - Required : status, name, idx_site.
+   * - Optional : message only if status is equal to 'N' || 'R'.
    * - Note : it will create a room only if room doesn't exists in simplest backend.
    */
   chatSendMessage(data: any): Observable<any> {
@@ -556,10 +556,10 @@ export class SimplestService extends SimplestLibrary {
    * @param data object that must contain:
    * - Required : name, idx_site.
    * - Optional : limit, page.
-   * - Note : it will create a room only if room doesn't exists in simplest backend.
+   * - Note : this check if the room exists.
    */
-  chatAllMessage(data: any) {
-    data.run = SPCHAT + 'all-message';
+  chatRoomMessages(data: any) {
+    data.run = SPCHAT + 'room-messages';
     return this.post(data);
   }
 
