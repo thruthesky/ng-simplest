@@ -159,13 +159,22 @@ export interface Site extends Request {
   widget_mobile_posts?: 'Y' | '';
   global_settings?: SiteGlobalSettings;
 
+  // this is for advertisement
   adv_desktop?: {
     url: string;
     src: string;
     title: string;
     description: string;
   };
+  adv_mobile?: {
+    url: string;
+    src: string;
+  };
 
+
+  // this is for chat
+  chat_greeting?: string;
+  chat_enabled?: string;
 }
 
 export interface DomainApply extends Request {
