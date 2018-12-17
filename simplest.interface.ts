@@ -158,6 +158,14 @@ export interface Site extends Request {
   widget_desktop_posts?: 'Y' | '';
   widget_mobile_posts?: 'Y' | '';
   global_settings?: SiteGlobalSettings;
+
+  adv_desktop?: {
+    url: string;
+    src: string;
+    title: string;
+    description: string;
+  };
+
 }
 
 export interface DomainApply extends Request {
