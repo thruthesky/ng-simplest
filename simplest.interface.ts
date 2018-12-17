@@ -123,6 +123,8 @@ export interface Site extends Request {
   name?: string; // site name
   author?: string; // poster/writer name. mostly blog owner's nickname.
   title?: string; // html title
+  title_on_desktop?: '' | '1'; // to display title on desktop browser.
+  title_on_mobile?: '' | '1'; // to display title on mobile.
   description?: string;
   keywords?: string;
   categories?: Categories;
