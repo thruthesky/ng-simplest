@@ -532,7 +532,8 @@ export class SimplestService extends SimplestLibrary {
    * @desc will return 100 rooms by default.
    * @param data object that must contain:
    * - Required : idx_site.
-   * - Optional : limit, page.
+   * - Optional : limit, page. order_by.
+   * - Note : order_by needs a specific field in the table.
    */
   chatRooms(data): Observable<any> {
     data.run = SPCHAT + 'rooms';
