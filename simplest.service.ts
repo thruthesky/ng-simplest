@@ -368,7 +368,7 @@ export class SimplestService extends SimplestLibrary {
             this.site = s;
         }, e => this.error(e));
      */
-  site(idx_site_or_domain, callback?): Observable<Site> {
+  site(idx_site_or_domain: string, callback?: any): Observable<Site> {
     if (typeof callback === 'function') {
       const cache = this.get(SITE_KEY);
       if (cache) {
