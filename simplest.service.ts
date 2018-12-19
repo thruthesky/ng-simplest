@@ -26,8 +26,12 @@ import {
   PostList,
   Post,
   FileImageResize,
+<<<<<<< HEAD
   Comment,
   Room
+=======
+  Comment, UserList
+>>>>>>> 063e9cc9c9c67d72483ebbf1398bfb36912ccba5
 } from './simplest.interface';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { map, filter, catchError, tap } from 'rxjs/operators';
@@ -611,5 +615,10 @@ export class SimplestService extends SimplestLibrary {
   pushNotificationTokenDelete(req) {
     req['run'] = 'push-notification.token-delete';
     return this.post(req);
+  }
+
+  userList(data: UserList): Observable<UserList> {
+    data.run = 'site.user-list';
+    return this.post(data);
   }
 }

@@ -292,6 +292,14 @@ export interface PostList extends Request {
   posts?: Array<Post>;
 }
 
+
+export interface UserList extends Request {
+  idx_site?: any;
+  page?: number;
+  limit?: any;
+  users?: Array<User>;
+}
+
 /**
  * Live Chat Interface
  */
