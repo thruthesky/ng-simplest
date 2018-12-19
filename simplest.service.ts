@@ -369,6 +369,7 @@ export class SimplestService extends SimplestLibrary {
         }, e => this.error(e));
      */
   site(idx_site_or_domain: string, callback?: any): Observable<Site> {
+    console.log(`   ===>>> site `, idx_site_or_domain);
     if (typeof callback === 'function') {
       const cache = this.get(SITE_KEY);
       if (cache) {
@@ -387,6 +388,7 @@ export class SimplestService extends SimplestLibrary {
   }
 
   siteUpdate(data: Site): Observable<Site> {
+    console.log(`   ===>>> site Update`, data);
     data.run = 'site.update';
     return this.post(data).pipe(
       tap(s => {
