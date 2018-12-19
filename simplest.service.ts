@@ -26,12 +26,9 @@ import {
   PostList,
   Post,
   FileImageResize,
-<<<<<<< HEAD
   Comment,
-  Room
-=======
-  Comment, UserList
->>>>>>> 063e9cc9c9c67d72483ebbf1398bfb36912ccba5
+  Room,
+  UserList
 } from './simplest.interface';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { map, filter, catchError, tap } from 'rxjs/operators';
