@@ -314,3 +314,21 @@ export interface PostList extends Request {
 //   type?: string;
 //   url?: string;
 // }
+
+
+/**
+ * Chat Room Interfaces
+ */
+
+export interface Room {
+  idx: string;
+  name: string;
+  idx_site: string;
+  idx_user: string;
+  stamp_created: number;
+  stamp_updated: number;
+  message: string;
+  message_count: number | string;
+  visit_count: number | string;
+  last_visit: string;
+}

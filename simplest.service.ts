@@ -26,7 +26,8 @@ import {
   PostList,
   Post,
   FileImageResize,
-  Comment
+  Comment,
+  Room
 } from './simplest.interface';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { map, filter, catchError, tap } from 'rxjs/operators';
@@ -538,8 +539,8 @@ export class SimplestService extends SimplestLibrary {
    * - Optional : limit, page. order_by.
    * - Note : order_by needs a specific field in the table.
    */
-  chatRooms(data): Observable<any> {
-    data.run = SPCHAT + 'rooms';
+  chatRooms(data): Observable<Room[]> {
+    data['run'] = SPCHAT + 'rooms';
     return this.post(data);
   }
 
