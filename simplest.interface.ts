@@ -46,6 +46,7 @@ export interface UserProfile {
 export interface User extends Response {
   run?: string;
   session_id?: string;
+  idx_site?: string;
   idx?: string;
   email?: string;
   password?: string;
@@ -175,6 +176,9 @@ export interface Site extends Request {
   // this is for chat
   chat_greeting?: string;
   chat_enabled?: string;
+
+
+  footer?: string;
 }
 
 export interface DomainApply extends Request {

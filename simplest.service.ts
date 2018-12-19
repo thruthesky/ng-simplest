@@ -259,7 +259,7 @@ export class SimplestService extends SimplestLibrary {
     return this.post(user).pipe(tap(res => this.setUser(res)));
   }
 
-  file(options: { idx?; taxonomy?; relation?; code? }): Observable<File> {
+  file(options: { idx?; taxonomy?; relation?; code?}): Observable<File> {
     options['run'] = 'file.get';
     return this.post(options);
   }
@@ -369,6 +369,7 @@ export class SimplestService extends SimplestLibrary {
         }, e => this.error(e));
      */
   site(idx_site_or_domain: string, callback?: any): Observable<Site> {
+    console.log(`   ===>>> site `, idx_site_or_domain);
     if (typeof callback === 'function') {
       const cache = this.get(SITE_KEY);
       if (cache) {
@@ -387,6 +388,7 @@ export class SimplestService extends SimplestLibrary {
   }
 
   siteUpdate(data: Site): Observable<Site> {
+    console.log(`   ===>>> site Update`, data);
     data.run = 'site.update';
     return this.post(data).pipe(
       tap(s => {
@@ -410,6 +412,7 @@ export class SimplestService extends SimplestLibrary {
     data.run = 'site.domain-apply';
     return this.post(data);
   }
+
   siteDomainDelete(domain): Observable<Domain> {
     const data = {
       run: 'site.domain-delete',
@@ -590,13 +593,13 @@ export class SimplestService extends SimplestLibrary {
     // console.log('path: ', path);
     url =
       `${this.backendHomeUrl}etc/thumbnail/?src=../..${path}&width=${options.width}&height=${
-        options.height
+      options.height
       }` + `&quality=${options.quality}&mode=${options.mode}`;
     // console.log('url: ', url);
     return url;
   }
 
-  pushNotificationTokenSave( req ) {
+  pushNotificationTokenSave(req) {
     req['run'] = 'push-notification.token-save';
     return this.post(req);
   }
