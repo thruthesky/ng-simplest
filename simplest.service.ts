@@ -259,7 +259,7 @@ export class SimplestService extends SimplestLibrary {
     return this.post(user).pipe(tap(res => this.setUser(res)));
   }
 
-  file(options: { idx?; taxonomy?; relation?; code? }): Observable<File> {
+  file(options: { idx?; taxonomy?; relation?; code?}): Observable<File> {
     options['run'] = 'file.get';
     return this.post(options);
   }
@@ -412,6 +412,7 @@ export class SimplestService extends SimplestLibrary {
     data.run = 'site.domain-apply';
     return this.post(data);
   }
+
   siteDomainDelete(domain): Observable<Domain> {
     const data = {
       run: 'site.domain-delete',
@@ -592,13 +593,13 @@ export class SimplestService extends SimplestLibrary {
     // console.log('path: ', path);
     url =
       `${this.backendHomeUrl}etc/thumbnail/?src=../..${path}&width=${options.width}&height=${
-        options.height
+      options.height
       }` + `&quality=${options.quality}&mode=${options.mode}`;
     // console.log('url: ', url);
     return url;
   }
 
-  pushNotificationTokenSave( req ) {
+  pushNotificationTokenSave(req) {
     req['run'] = 'push-notification.token-save';
     return this.post(req);
   }
