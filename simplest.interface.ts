@@ -46,6 +46,7 @@ export interface UserProfile {
 export interface User extends Response {
   run?: string;
   session_id?: string;
+  idx_site?: string;
   idx?: string;
   email?: string;
   password?: string;
