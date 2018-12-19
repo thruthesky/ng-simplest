@@ -175,6 +175,9 @@ export interface Site extends Request {
   // this is for chat
   chat_greeting?: string;
   chat_enabled?: string;
+
+
+  footer?: string;
 }
 
 export interface DomainApply extends Request {
