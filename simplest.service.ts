@@ -389,6 +389,18 @@ export class SimplestService extends SimplestLibrary {
     );
   }
 
+  /**
+   * Returns true if the input has correct site settings
+   * @param site site settings
+   */
+  siteCheck(site: Site): boolean {
+    if (site && site.idx !== void 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   siteUpdate(data: Site): Observable<Site> {
     console.log(`   ===>>> site Update`, data);
     data.run = 'site.update';
