@@ -230,10 +230,20 @@ export class SimplestService extends SimplestLibrary {
   get myNickname(): string {
     return this.getUser('nickname');
   }
+  get myEmail(): string {
+    return this.getUser('email');
+  }
 
   register(user: User): Observable<User> {
     user.run = 'user.register';
     return this.post(user).pipe(tap(res => this.setUser(res)));
+  }
+  resign(): Observable<any> {
+    return this.post({run: 'user.resign' }).pipe(
+      tap( x => {
+        this.logout();
+      })
+    );
   }
 
   login(email, password): Observable<User> {
