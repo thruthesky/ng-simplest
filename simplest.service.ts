@@ -55,7 +55,7 @@ export class SimplestService extends SimplestLibrary {
     @Inject(SimplestConfigToken) private config: SimplestConfig
   ) {
     super();
-    console.log('SimplestService::constructor() : config: ', this.config);
+    // console.log('SimplestService::constructor() : config: ', this.config);
   }
 
   get backendUrl() {
@@ -371,7 +371,7 @@ export class SimplestService extends SimplestLibrary {
         }, e => this.error(e));
      */
   site(idx_site_or_domain: string, callback?: any): Observable<Site> {
-    console.log(`   ===>>> site `, idx_site_or_domain);
+    // console.log(`   ===>>> site `, idx_site_or_domain);
     if (typeof callback === 'function') {
       const cache = this.get(SITE_KEY);
       if (cache) {
