@@ -614,6 +614,11 @@ export class SimplestService extends SimplestLibrary {
     return this.post(req);
   }
 
+  pushNotificationSendAll(req) {
+    req['run'] = 'push-notification.send-all';
+    return this.post(req);
+  }
+
   userList(data: UserList): Observable<UserList> {
     data.run = 'site.user-list';
     return this.post(data);
