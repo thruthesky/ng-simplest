@@ -328,15 +328,37 @@ export interface UserList extends Request {
  * Chat Room Interfaces
  */
 
-export interface Room {
-  idx: string;
-  name: string;
-  idx_site: string;
-  idx_user: string;
-  stamp_created: number;
-  stamp_updated: number;
-  message: string;
-  message_count: number | string;
-  visit_count: number | string;
-  last_visit: string;
+
+
+/**
+ * This room interface must be the same structure of database room table
+ */
+export interface ChatRoom {
+  idx?: string;
+  name?: string;
+  idx_site?: string;
+  idx_user?: string;
+  stamp_created?: number;
+  stamp_updated?: number;
+  message?: string;
+  message_count?: number | string;
+  visit_count?: number | string;
+  last_visi?: string;
+}
+
+/**
+ * This interface must be same structure of chat message table and should be compatible with firebase chat event.
+ */
+export interface ChatMessage {
+  idx?: string;
+  idx_site?: string;
+  idx_chat_room?: string;
+  idx_user?: string;
+  message?: string;
+  type?: string;
+  url?: string;
+  status?: 'N' | 'R' | 'C';
+  stamp_created?: string;
+  stamp_updated?: string;
+  name?: string; // this is for room name. chat message could have room name instead of chat room idx
 }
