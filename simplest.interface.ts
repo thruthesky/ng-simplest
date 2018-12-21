@@ -172,11 +172,9 @@ export interface Site extends Request {
     src: string;
   };
 
-
   // this is for chat
   chat_greeting?: string;
   chat_enabled?: string;
-
 
   footer?: string;
 }
@@ -253,7 +251,6 @@ export interface Post extends Request {
   user?: PostUser;
 }
 
-
 export type Posts = Array<Post>;
 
 export interface Comment extends Request {
@@ -292,7 +289,6 @@ export interface PostList extends Request {
   posts?: Array<Post>;
 }
 
-
 export interface UserList extends Request {
   idx_site?: any;
   page?: number;
@@ -323,12 +319,9 @@ export interface UserList extends Request {
 //   url?: string;
 // }
 
-
 /**
  * Chat Room Interfaces
  */
-
-
 
 /**
  * This room interface must be the same structure of database room table
@@ -343,7 +336,7 @@ export interface ChatRoom {
   message?: string;
   message_count?: number | string;
   visit_count?: number | string;
-  last_visi?: string;
+  last_visit?: string;
 }
 
 /**
