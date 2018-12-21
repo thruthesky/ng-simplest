@@ -239,8 +239,8 @@ export class SimplestService extends SimplestLibrary {
     return this.post(user).pipe(tap(res => this.setUser(res)));
   }
   resign(): Observable<any> {
-    return this.post({run: 'user.resign' }).pipe(
-      tap( x => {
+    return this.post({ run: 'user.resign' }).pipe(
+      tap(x => {
         this.logout();
       })
     );
@@ -390,13 +390,24 @@ export class SimplestService extends SimplestLibrary {
         callback(cache);
       }
     }
-    return this.post({ run: 'site.get', idx_site_or_domain: idx_site_or_domain, debug: true }).pipe(
+    return this.post({ run: 'site.get', idx_site_or_domain: idx_site_or_domain }).pipe(
       tap(s => {
         this.siteSettings = s;
         this.set(SITE_KEY, s);
         this.siteEvent.next(s);
       })
     );
+  }
+
+  /**
+   * Get site information.
+   * @attention the difference between site() and siteGet() is that
+   *    site() will loads the current site settings while siteGet() only gets the site's setting but does not affect the current site.
+   * @param idx_site_or_domain site idx or domain
+   * @usage Use this method when you need to load site settngs but don't want to re-apply(or refresh) the current site state.
+   */
+  siteGet(idx_site_or_domain: string): Observable<Site> {
+    return this.post({ run: 'site.get', idx_site_or_domain: idx_site_or_domain });
   }
 
   /**
