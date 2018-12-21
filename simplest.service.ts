@@ -415,7 +415,7 @@ export class SimplestService extends SimplestLibrary {
    * @param site site settings
    */
   siteCheck(site: Site): boolean {
-    if (site && site.idx !== void 0) {
+    if (site && site.idx !== void 0 && site.idx) {
       return true;
     } else {
       return false;
