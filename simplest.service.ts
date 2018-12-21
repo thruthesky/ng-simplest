@@ -263,7 +263,7 @@ export class SimplestService extends SimplestLibrary {
     const data: UserProfile = {
       run: 'user.profile'
     };
-    console.log('request data: ', data, this.user);
+    // console.log('request data: ', data, this.user);
     return this.post(data).pipe(tap(res => this.setUser(res)));
   }
   profileUpdate(user: User): Observable<User> {
@@ -284,7 +284,7 @@ export class SimplestService extends SimplestLibrary {
    * @see https://docs.google.com/document/d/1nOEJVDilLbF0sNCkkRGcDwdT3rDLZp3h59oQ77BIdp4/edit#heading=h.8fvprdfjs0v5
    */
   fileUpload(files: FileList, options: FileCreateOptions): Observable<File> {
-    console.log('SimplestService::fileUpload()', files, options);
+    // console.log('SimplestService::fileUpload()', files, options);
     if (files === void 0 || !files.length || files[0] === void 0) {
       return throwError(this.createError('no-file-selected', 'Please, select a file'));
     }
@@ -412,7 +412,7 @@ export class SimplestService extends SimplestLibrary {
   }
 
   siteUpdate(data: Site): Observable<Site> {
-    console.log(`   ===>>> site Update`, data);
+    // console.log(`   ===>>> site Update`, data);
     data.run = 'site.update';
     return this.post(data).pipe(
       tap(s => {
@@ -463,7 +463,7 @@ export class SimplestService extends SimplestLibrary {
    */
   siteComponent(comp, options) {
     options['run'] = 'site.components/' + comp;
-    console.log('siteComponent: ', options);
+    // console.log('siteComponent: ', options);
     return this.post(options); // .pipe(tap(r => console.log('r: ', r)));
   }
 
