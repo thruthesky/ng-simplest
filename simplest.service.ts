@@ -400,6 +400,17 @@ export class SimplestService extends SimplestLibrary {
   }
 
   /**
+   * @return Observable of global settings.
+   */
+  siteGlobalSettings(): Observable<Site> {
+    return this.post({run: 'site.global-settings'}).pipe(
+      tap( g => {
+        this.siteSettings.global_settings = g;
+      })
+    );
+  }
+
+  /**
    * Get site information.
    * @attention the difference between site() and siteGet() is that
    *    site() will loads the current site settings while siteGet() only gets the site's setting but does not affect the current site.
