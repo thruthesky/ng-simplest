@@ -413,7 +413,8 @@ export class SimplestService extends SimplestLibrary {
   /**
    * Get site information.
    * @attention the difference between site() and siteGet() is that
-   *    site() will loads the current site settings while siteGet() only gets the site's setting but does not affect the current site.
+   *    - site() will loads the current site settings and apply it to global variable
+   *    - while siteGet() only gets the site's setting but does not affect the current site.
    * @param idx_site_or_domain site idx or domain
    * @usage Use this method when you need to load site settngs but don't want to re-apply(or refresh) the current site state.
    */
