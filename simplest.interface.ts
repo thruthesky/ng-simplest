@@ -177,6 +177,9 @@ export interface Site extends Request {
   chat_enabled?: string;
 
   footer?: string;
+
+
+  pre?: boolean; // true if the site information has been preprocessed. This is only for client use.
 }
 
 export interface DomainApply extends Request {
