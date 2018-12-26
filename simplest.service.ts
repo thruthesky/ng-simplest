@@ -334,7 +334,7 @@ export class SimplestService extends SimplestLibrary {
             // console.log('file upload error. percentage is not number');
             return <any>0;
           } else {
-            // console.log('upload percentage: ', precentage);
+            // console.log('upload percentage: ', percentage);
             return <any>precentage;
           }
         } else {
