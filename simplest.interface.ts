@@ -178,8 +178,11 @@ export interface Site extends Request {
 
   footer?: string;
 
+  no_of_posts?: string;   // total number of posts of the site
+  no_of_comments?: string;   // total number of comments of the site
 
   pre?: boolean; // true if the site information has been preprocessed. This is only for client use.
+  isNewSite?: boolean;
 }
 
 export interface DomainApply extends Request {
