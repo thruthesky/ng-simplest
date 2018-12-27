@@ -343,7 +343,6 @@ export interface ChatRoom {
   message?: string;
   message_count?: string;
   visit_count?: string;
-  last_visit?: string;
 }
 
 /**
