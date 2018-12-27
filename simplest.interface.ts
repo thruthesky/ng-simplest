@@ -196,8 +196,9 @@ export interface SiteGlobalSettings {
   available_domains: number;
   available_sites: number;
   domains_in_progress: number;
-  default_domains: Array<string>;
+  root_domains: Array<string>;
 }
+
 
 export interface Sites {
   global_settings?: SiteGlobalSettings;
