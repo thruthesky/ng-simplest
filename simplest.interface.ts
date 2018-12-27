@@ -341,8 +341,8 @@ export interface ChatRoom {
   stamp_created?: number;
   stamp_updated?: number;
   message?: string;
-  message_count?: number | string;
-  visit_count?: number | string;
+  message_count?: string;
+  visit_count?: string;
   last_visit?: string;
 }
 
