@@ -403,8 +403,8 @@ export class SimplestService extends SimplestLibrary {
    * @return Observable of global settings.
    */
   siteGlobalSettings(): Observable<Site> {
-    return this.post({run: 'site.global-settings'}).pipe(
-      tap( g => {
+    return this.post({ run: 'site.global-settings' }).pipe(
+      tap(g => {
         this.siteSettings.global_settings = g;
       })
     );
