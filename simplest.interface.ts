@@ -114,6 +114,13 @@ export interface Domain {
   status: string;
 }
 
+export interface SiteGlobalAdvertisement {
+  url: string;
+  src: string;
+  title: string;
+  description: string;
+}
+
 export interface Site extends Request {
   idx?: any; // site.idx
   user_ID?: string; // Wordpress user ID
@@ -161,16 +168,8 @@ export interface Site extends Request {
   global_settings?: SiteGlobalSettings;
 
   // this is for advertisement
-  adv_desktop?: {
-    url: string;
-    src: string;
-    title: string;
-    description: string;
-  };
-  adv_mobile?: {
-    url: string;
-    src: string;
-  };
+  adv_desktop?: SiteGlobalAdvertisement;
+  adv_mobile?: SiteGlobalAdvertisement;
 
   // this is for chat
   chat_greeting?: string;
