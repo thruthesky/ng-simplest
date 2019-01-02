@@ -28,7 +28,8 @@ import {
   FileImageResize,
   Comment,
   UserList,
-  ChatRoom
+  ChatRoom,
+  ChangeCategory
 } from './simplest.interface';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { map, filter, catchError, tap } from 'rxjs/operators';
@@ -559,6 +560,11 @@ export class SimplestService extends SimplestLibrary {
       run: 'post.delete',
       idx: idx
     };
+    return this.post(data);
+  }
+
+  postChangeCategory(data: ChangeCategory): Observable<ChangeCategory> {
+    data.run = 'post.change-category';
     return this.post(data);
   }
 

@@ -295,6 +295,13 @@ export interface PostList extends Request {
   posts?: Array<Post>;
 }
 
+
+export interface ChangeCategory extends Request {
+  idx_post?: string;
+  idx_category?: string;
+}
+
+
 export interface UserList extends Request {
   idx_site?: any;
   page?: number;
