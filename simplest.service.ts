@@ -623,6 +623,7 @@ export class SimplestService extends SimplestLibrary {
   /**
    * Returns thumbnail URL
    * @param fileOrUrl file object or url of the image.
+   * @warning fileOrUrl cannot be a post object.
    * @see etc/thumbnail/index.php for detail
    */
   thumbnailUrl(
@@ -632,16 +633,22 @@ export class SimplestService extends SimplestLibrary {
     if (!fileOrUrl) {
       return '';
     }
+
     const defaults = { width: 120, height: 120, quality: 80, mode: 'crop' };
     options = Object.assign(defaults, options);
-    let url: string;
+    let url = '';
     if (typeof fileOrUrl === 'string') {
       url = fileOrUrl;
     } else if (fileOrUrl['url'] !== void 0) {
       url = fileOrUrl['url'];
-    } else {
+    }
+
+    if (!url) {
       return '';
     }
+
+    // console.log('url: ', url);
+
     const path = url.substr(url.indexOf('/files/'));
     // console.log('path: ', path);
     url =
@@ -651,6 +658,33 @@ export class SimplestService extends SimplestLibrary {
     // console.log('url: ', url);
     return url;
   }
+
+  /**
+   * Returns the first iamge url of the post from 'post.files' object.
+   * @param post post
+   * @return
+   *    file url
+   *    or empty string
+   */
+  postFirstImageUrl(post: Post): string {
+    if (post && post.files && post.files.length) {
+      for (const file of post.files) {
+        if (file.type.indexOf('image/') !== -1) {
+          return file.url;
+        }
+      }
+    }
+    return '';
+  }
+
+  /**
+   * Returns true if the post has a photo.
+   * @param post post
+   */
+  postHasImage(post: Post): boolean {
+    return !!this.postFirstImageUrl(post);
+  }
+
 
   pushNotificationTokenSave(req) {
     req['run'] = 'push-notification.token-save';
