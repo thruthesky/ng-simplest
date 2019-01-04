@@ -29,7 +29,8 @@ import {
   Comment,
   UserList,
   ChatRoom,
-  ChangeCategory
+  ChangeCategory,
+  Rooms
 } from './simplest.interface';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { map, filter, catchError, tap } from 'rxjs/operators';
@@ -49,7 +50,14 @@ export class SimplestService extends SimplestLibrary {
    * @desc You may need to call site.get on boot to set/save the site info from backend.
    */
   siteSettings: Site = {};
+  /**
+   * Fires event on site event
+   */
   siteEvent = new BehaviorSubject<Site>(null);
+  /**
+   * Fires user event on register, login, logout, profile upload and profile is loaded from backend.
+   */
+  userEvent = new BehaviorSubject<User>(null);
 
   constructor(
     private http: HttpClient,
@@ -141,6 +149,8 @@ export class SimplestService extends SimplestLibrary {
   /**
    * Saves user response data
    * @param user user response data from backend
+   *
+   * @note it fires user event on register, login, logout, profile upload and when profile is loaded from backend.
    */
   private setUser(user: User) {
     if (this.config.enableLoginToAllSubdomains) {
@@ -148,6 +158,7 @@ export class SimplestService extends SimplestLibrary {
     } else {
       this.set(USER_KEY, user);
     }
+    this.userEvent.next(user);
   }
   /**
    * Returns user response data or a field or user data.
@@ -591,8 +602,16 @@ export class SimplestService extends SimplestLibrary {
    * - Optional : limit, page. order_by.
    * - Note : order_by needs a specific field in the table.
    */
-  chatRooms(data): Observable<ChatRoom[]> {
+  chatRooms(data): Observable<Rooms> {
     data['run'] = SPCHAT + 'rooms';
+    return this.post(data);
+  }
+
+  chatRoomsOfNewMessages(idx_site: string): Observable<Array<ChatRoom>> {
+    const data = {
+      run: SPCHAT + 'rooms-of-new-messages',
+      idx_site: idx_site
+    };
     return this.post(data);
   }
 

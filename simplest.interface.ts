@@ -352,6 +352,11 @@ export interface ChatRoom {
   last_message?: string;
 }
 
+export interface Rooms {
+  no_of_new_messages: string;
+  rooms: Array<ChatRoom>;
+}
+
 /**
  * This interface must be same structure of chat message table and should be compatible with firebase chat event.
  */
