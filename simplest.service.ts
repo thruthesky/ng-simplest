@@ -272,7 +272,7 @@ export class SimplestService extends SimplestLibrary {
     return this.post(user).pipe(tap(res => this.setUser(res)));
   }
 
-  file(options: { idx?; taxonomy?; relation?; code?}): Observable<File> {
+  file(options: { idx?; taxonomy?; relation?; code? }): Observable<File> {
     options['run'] = 'file.get';
     return this.post(options);
   }
@@ -621,6 +621,18 @@ export class SimplestService extends SimplestLibrary {
   }
 
   /**
+   * will update idx_user in simplest chat_room.
+   * @param idxChatRoom chat room id.
+   */
+  chatUpdateRoom(idxChatRoom) {
+    const data = {
+      run: SPCHAT + 'update-room',
+      idx_chat_room: idxChatRoom
+    };
+    return this.post(data);
+  }
+
+  /**
    * Returns thumbnail URL
    * @param fileOrUrl file object or url of the image.
    * @warning fileOrUrl cannot be a post object.
@@ -653,7 +665,7 @@ export class SimplestService extends SimplestLibrary {
     // console.log('path: ', path);
     url =
       `${this.backendHomeUrl}etc/thumbnail/?src=../..${path}&width=${options.width}&height=${
-      options.height
+        options.height
       }` + `&quality=${options.quality}&mode=${options.mode}`;
     // console.log('url: ', url);
     return url;
@@ -684,7 +696,6 @@ export class SimplestService extends SimplestLibrary {
   postHasImage(post: Post): boolean {
     return !!this.postFirstImageUrl(post);
   }
-
 
   pushNotificationTokenSave(req) {
     req['run'] = 'push-notification.token-save';
