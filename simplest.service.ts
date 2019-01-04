@@ -719,4 +719,8 @@ export class SimplestService extends SimplestLibrary {
     data.run = 'site.user-list';
     return this.post(data);
   }
+
+  pushNotificationSendCommentParent(idx): Observable<any> {
+    return this.post({ run: 'push-notification.send-comment-parents', idx: idx });
+  }
 }
