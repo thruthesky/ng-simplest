@@ -177,8 +177,8 @@ export interface Site extends Request {
 
   footer?: string;
 
-  no_of_posts?: string;   // total number of posts of the site
-  no_of_comments?: string;   // total number of comments of the site
+  no_of_posts?: string; // total number of posts of the site
+  no_of_comments?: string; // total number of comments of the site
 
   pre?: boolean; // true if the site information has been preprocessed. This is only for client use.
   isNewSite?: boolean;
@@ -197,7 +197,6 @@ export interface SiteGlobalSettings {
   domains_in_progress: number;
   root_domains: Array<string>;
 }
-
 
 export interface Sites {
   global_settings?: SiteGlobalSettings;
@@ -295,12 +294,10 @@ export interface PostList extends Request {
   posts?: Array<Post>;
 }
 
-
 export interface ChangeCategory extends Request {
   idx_post?: string;
   idx_category?: string;
 }
-
 
 export interface UserList extends Request {
   idx_site?: any;
@@ -346,6 +343,7 @@ export interface ChatRoom {
   idx_user?: string;
   stamp_created?: number;
   stamp_updated?: number;
+  stamp_last_message?: string;
   message?: string;
   message_count?: string;
   visit_count?: string;

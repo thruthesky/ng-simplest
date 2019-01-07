@@ -59,10 +59,7 @@ export class SimplestService extends SimplestLibrary {
    */
   userEvent = new BehaviorSubject<User>(null);
 
-  constructor(
-    private http: HttpClient,
-    @Inject(SimplestConfigToken) private config: SimplestConfig
-  ) {
+  constructor(private http: HttpClient, @Inject(SimplestConfigToken) private config: SimplestConfig) {
     super();
     // console.log('SimplestService::constructor() : config: ', this.config);
   }
@@ -112,9 +109,7 @@ export class SimplestService extends SimplestLibrary {
     }
 
     if (!this.backendUrl) {
-      return throwError(
-        this.createError('backendUrl', 'Server url is not set. Set it on App Module constructor().')
-      );
+      return throwError(this.createError('backendUrl', 'Server url is not set. Set it on App Module constructor().'));
     }
     return this.http.post(this.backendUrl, data).pipe(
       map((res: Response) => {
@@ -628,6 +623,17 @@ export class SimplestService extends SimplestLibrary {
   }
 
   /**
+   * @desc this will zero the stamp_last_message.
+   * @param idx_chat_room chat room id.
+   */
+  chatReadMessage(idx_chat_room) {
+    const data = {
+      run: SPCHAT + 'read-message',
+      idx_chat_room: idx_chat_room
+    };
+    return this.post(data);
+  }
+  /**
    * @desc will retrieve 20 messages by default.
    * @param data object that must contain:
    * - Required : name, idx_site.
@@ -640,13 +646,13 @@ export class SimplestService extends SimplestLibrary {
   }
 
   /**
-   * will update idx_user in simplest chat_room.
-   * @param idxChatRoom chat room id.
+   * @desc return the update room from simplest.
+   * @param idx_chat_room chat room id.
    */
-  chatUpdateRoom(idxChatRoom) {
+  chatUpdateRoom(idx_chat_room) {
     const data = {
       run: SPCHAT + 'update-room',
-      idx_chat_room: idxChatRoom
+      idx_chat_room: idx_chat_room
     };
     return this.post(data);
   }
@@ -683,9 +689,8 @@ export class SimplestService extends SimplestLibrary {
     const path = url.substr(url.indexOf('/files/'));
     // console.log('path: ', path);
     url =
-      `${this.backendHomeUrl}etc/thumbnail/?src=../..${path}&width=${options.width}&height=${
-        options.height
-      }` + `&quality=${options.quality}&mode=${options.mode}`;
+      `${this.backendHomeUrl}etc/thumbnail/?src=../..${path}&width=${options.width}&height=${options.height}` +
+      `&quality=${options.quality}&mode=${options.mode}`;
     // console.log('url: ', url);
     return url;
   }
