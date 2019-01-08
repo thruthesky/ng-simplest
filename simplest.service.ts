@@ -278,7 +278,7 @@ export class SimplestService extends SimplestLibrary {
     return this.post(user).pipe(tap(res => this.setUser(res)));
   }
 
-  file(options: { idx?; taxonomy?; relation?; code? }): Observable<File> {
+  file(options: { idx?; taxonomy?; relation?; code?}): Observable<File> {
     options['run'] = 'file.get';
     return this.post(options);
   }
@@ -649,7 +649,7 @@ export class SimplestService extends SimplestLibrary {
    * @desc return the update room from simplest.
    * @param idx_chat_room chat room id.
    */
-  chatUpdateRoom(idx_chat_room) {
+  chatUpdateRoom(idx_chat_room: any) {
     const data = {
       run: SPCHAT + 'update-room',
       idx_chat_room: idx_chat_room
