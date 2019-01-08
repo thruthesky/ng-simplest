@@ -336,38 +336,38 @@ export interface UserList extends Request {
 /**
  * This room interface must be the same structure of database room table
  */
-export interface ChatRoom {
-  idx?: string;
-  name?: string;
-  idx_site?: string;
-  idx_user?: string;
-  stamp_created?: number;
-  stamp_updated?: number;
-  stamp_last_message?: string;
-  message?: string;
-  message_count?: string;
-  visit_count?: string;
-  last_message?: string;
-}
+// export interface ChatRoom {
+//   idx?: string;
+//   name?: string;
+//   idx_site?: string;
+//   idx_user?: string;
+//   stamp_created?: number;
+//   stamp_updated?: number;
+//   stamp_last_message?: string;
+//   message?: string;
+//   message_count?: string;
+//   visit_count?: string;
+//   last_message?: string;
+// }
 
-export interface Rooms {
-  no_of_new_messages: string;
-  rooms: Array<ChatRoom>;
-}
+// export interface Rooms {
+//   no_of_new_messages: string;
+//   rooms: Array<ChatRoom>;
+// }
 
 /**
  * This interface must be same structure of chat message table and should be compatible with firebase chat event.
  */
-export interface ChatMessage {
-  idx?: string;
-  idx_site?: string;
-  idx_chat_room?: string;
-  idx_user?: string;
-  message?: string;
-  type?: string;
-  url?: string;
-  status?: 'N' | 'R' | 'C';
-  stamp_created?: string;
-  stamp_updated?: string;
-  name?: string; // this is for room name. chat message could have room name instead of chat room idx
-}
+// export interface ChatMessage {
+//   idx?: string;
+//   idx_site?: string;
+//   idx_chat_room?: string;
+//   idx_user?: string;
+//   message?: string;
+//   type?: string;
+//   url?: string;
+//   status?: 'N' | 'R' | 'C';
+//   stamp_created?: string;
+//   stamp_updated?: string;
+//   name?: string; // this is for room name. chat message could have room name instead of chat room idx
+// }
