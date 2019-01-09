@@ -254,6 +254,7 @@ export interface Post extends Request {
   // nickname?: string;
   // photo?: string;
   user?: PostUser;
+  editor?: string; // to mark which editor (or what kind of wysiwyg editor) the post created with.
 }
 
 export type Posts = Array<Post>;
