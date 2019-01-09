@@ -181,7 +181,13 @@ export interface Site extends Request {
   no_of_comments?: string; // total number of comments of the site
 
   pre?: boolean; // true if the site information has been preprocessed. This is only for client use.
-  isNewSite?: boolean;
+  isNewSite?: boolean; // true if the site is newly created. This is only for client use.
+
+
+  //
+  notificationAdminNewPost?: string; // send push to admin on new post
+  notificationAdminNewComment?: string; // send push to admin on new comment
+  notificationParents?: string; // send push to parents on new comment
 }
 
 export interface DomainApply extends Request {
