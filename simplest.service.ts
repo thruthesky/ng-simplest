@@ -744,7 +744,20 @@ export class SimplestService extends SimplestLibrary {
     return this.post(data);
   }
 
-  pushNotificationSendCommentParent(idx): Observable<any> {
-    return this.post({ run: 'push-notification.send-comment-parents', idx: idx });
+  pushNotificationSendCommentToParent(idx): Observable<any> {
+    return this.post({
+      run: 'push-notification.send-comment-notification-parents',
+      idx: idx,
+      idx_site: this.siteSettings.idx,
+      domain: this.currentDomain()
+    });
+  }
+  pushNotificationSendPostToOwner(idx): Observable<any> {
+    return this.post({
+      run: 'push-notification.send-post-notification-owner',
+      idx: idx,
+      idx_site: this.siteSettings.idx,
+      domain: this.currentDomain()
+    });
   }
 }
