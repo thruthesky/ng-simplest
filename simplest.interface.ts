@@ -200,7 +200,7 @@ export interface SiteGlobalSettings {
   max_sites: number;
   available_domains: number;
   available_sites: number;
-  domains_in_progress: number;
+  domains_in_progress: string;
   root_domains: Array<string>;
 }
 
