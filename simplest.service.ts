@@ -151,10 +151,17 @@ export class SimplestService extends SimplestLibrary {
    * @param user user response data from backend
    *
    * @note it fires user event on register, login, logout, profile upload and when profile is loaded from backend.
+   * @fix 2019-01-14 cookie not work on localhost ( localhost domain does not need leading dot )
    */
   private setUser(user: User) {
     if (this.config.enableLoginToAllSubdomains) {
-      cookie.setItem(USER_KEY, JSON.stringify(user), Infinity, '/', '.' + this.currentRootDomain());
+      const data = JSON.stringify(user);
+      let domain = this.currentRootDomain();
+      if (domain !== 'localhost') {
+        domain += '.' + domain;
+      }
+      // console.log(USER_KEY, data, Infinity, '/', domain);
+      cookie.setItem(USER_KEY, data, Infinity, '/', domain);
     } else {
       this.set(USER_KEY, user);
     }
@@ -239,6 +246,17 @@ export class SimplestService extends SimplestLibrary {
     // }
   }
 
+  /**
+   * Returns user name
+   * @since 2019-01-14
+   */
+  get myName(): string {
+    return this.getUser('name');
+  }
+
+  /**
+   * Returns nickname
+   */
   get myNickname(): string {
     return this.getUser('nickname');
   }
