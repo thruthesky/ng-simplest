@@ -188,6 +188,7 @@ export interface Site extends Request {
   notificationAdminNewPost?: string; // send push to admin on new post
   notificationAdminNewComment?: string; // send push to admin on new comment
   notificationParents?: string; // send push to parents on new comment
+  notificationAllUsersNewPost?: string; // send push to all users on new post
 }
 
 export interface DomainApply extends Request {
