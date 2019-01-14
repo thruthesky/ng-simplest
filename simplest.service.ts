@@ -59,6 +59,11 @@ export class SimplestService extends SimplestLibrary {
    */
   userEvent = new BehaviorSubject<User>(null);
 
+  /**
+   * Store the current link
+   */
+  siteCurrentPage = '';
+
   constructor(private http: HttpClient, @Inject(SimplestConfigToken) private config: SimplestConfig) {
     super();
     // console.log('SimplestService::constructor() : config: ', this.config);
