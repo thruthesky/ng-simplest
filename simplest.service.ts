@@ -662,6 +662,13 @@ export class SimplestService extends SimplestLibrary {
    * @param fileOrUrl file object or url of the image.
    * @warning fileOrUrl cannot be a post object.
    * @see etc/thumbnail/index.php for detail
+   * @example
+   *            a.sp.thumbnailUrl(file.url, {
+    width: 100,
+    height: 100,
+    quality: 100,
+    mode: 'crop'
+  })
    */
   thumbnailUrl(
     fileOrUrl: any,
