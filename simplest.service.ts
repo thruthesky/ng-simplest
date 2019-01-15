@@ -158,7 +158,7 @@ export class SimplestService extends SimplestLibrary {
       const data = JSON.stringify(user);
       let domain = this.currentRootDomain();
       if (domain !== 'localhost') {
-        domain += '.' + domain;
+        domain = '.' + domain;
       }
       console.log(USER_KEY, data, Infinity, '/', domain);
       cookie.setItem(USER_KEY, data, Infinity, '/', domain);
