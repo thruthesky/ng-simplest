@@ -1,5 +1,4 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SimplestService } from './simplest.service';
 import { SimplestConfig } from './simplest.interface';
@@ -10,7 +9,6 @@ import { SimplestConfigToken } from './simplest.config';
         HttpClientModule
     ],
     exports: [
-        FormsModule,
         HttpClientModule
     ],
     providers: [SimplestService],
