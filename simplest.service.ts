@@ -301,6 +301,20 @@ export class SimplestService extends SimplestLibrary {
     return this.post(user).pipe(tap(res => this.setUser(res)));
   }
 
+  /**
+   * this will update user password.
+   * @since 01-15-19
+   * @approval
+   */
+  changePassword(oldPassword: string , newPassword: string): Observable<{idx_user: string}> {
+    const data = {
+      run: 'user.change-password',
+      old_password: oldPassword,
+      new_password: newPassword,
+    };
+    return this.post(data);
+  }
+
   file(options: { idx?; taxonomy?; relation?; code?}): Observable<File> {
     options['run'] = 'file.get';
     return this.post(options);
