@@ -796,9 +796,9 @@ export class SimplestService extends SimplestLibrary {
       domain: this.currentDomain()
     });
   }
-  pushNotificationSendPostToOwner(idx): Observable<any> {
+  pushNotificationSendNewPost(idx): Observable<any> {
     return this.post({
-      run: 'push-notification.send-post-notification-owner',
+      run: 'push-notification.send-new-post-notification',
       idx: idx,
       idx_site: this.siteSettings.idx,
       domain: this.currentDomain()
