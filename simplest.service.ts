@@ -35,7 +35,7 @@ import {
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { map, filter, catchError, tap } from 'rxjs/operators';
 
-import { docCookies as cookie } from './simple.cookie';
+import { docCookies } from './simple.cookie';
 import { SimplestLibrary } from './simplest.library';
 
 const USER_KEY = '_user';
@@ -161,7 +161,7 @@ export class SimplestService extends SimplestLibrary {
         domain = '.' + domain;
       }
       console.log(USER_KEY, data, Infinity, '/', domain);
-      cookie.setItem(USER_KEY, data, Infinity, '/', domain);
+      docCookies.setItem(USER_KEY, data, Infinity, '/', domain);
     } else {
       this.set(USER_KEY, user);
     }
@@ -176,7 +176,7 @@ export class SimplestService extends SimplestLibrary {
    */
   private getUser<T>(field = null): T {
     if (this.config.enableLoginToAllSubdomains) {
-      const val = cookie.getItem(USER_KEY);
+      const val = docCookies.getItem(USER_KEY);
       if (val) {
         try {
           const user = JSON.parse(val);
