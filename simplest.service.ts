@@ -29,7 +29,7 @@ import {
   Comment,
   UserList,
   // ChatRoom,
-  ChangeCategory,
+  ChangeCategory, ChangePassword,
   // Rooms
 } from './simplest.interface';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
@@ -306,12 +306,8 @@ export class SimplestService extends SimplestLibrary {
    * @since 01-15-19
    * @approval
    */
-  changePassword(oldPassword: string , newPassword: string): Observable<{idx_user: string}> {
-    const data = {
-      run: 'user.change-password',
-      old_password: oldPassword,
-      new_password: newPassword,
-    };
+  changePassword(data: ChangePassword): Observable<{idx_user: string}> {
+    data['run'] = 'user.change-password';
     return this.post(data);
   }
 
