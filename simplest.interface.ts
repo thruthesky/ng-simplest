@@ -64,7 +64,7 @@ export interface User extends Response {
   stamp_created?: string;
 }
 
-export interface ChangePassword extends Request{
+export interface ChangePassword extends Request {
   old_password?: string;
   new_password?: string;
 }
