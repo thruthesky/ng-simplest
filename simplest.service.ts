@@ -306,9 +306,9 @@ export class SimplestService extends SimplestLibrary {
    * @since 01-15-19
    * @approval
    */
-  changePassword(data: ChangePassword): Observable<{idx_user: string}> {
+  changePassword(data: ChangePassword): Observable<{ idx_user: string }> {
     data['run'] = 'user.change-password';
-    return this.post(data);
+    return this.post(data).pipe(tap(res => this.setUser(res)));
   }
 
   file(options: { idx?; taxonomy?; relation?; code?}): Observable<File> {
@@ -617,6 +617,12 @@ export class SimplestService extends SimplestLibrary {
   }
   commentDelete(idx_comment: any): Observable<Comment> {
     return this.post({ run: 'comment.delete', idx: idx_comment });
+  }
+
+
+  vote(data) {
+    data.run = 'post.vote';
+    return this.post(data);
   }
 
   /**

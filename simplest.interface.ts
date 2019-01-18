@@ -259,6 +259,8 @@ export interface Post extends Request {
   // This is for information backend which files to set to the post.
   files_idx?: Array<string>;
   comments?: Comments;
+  good?: string;
+  bad?: string;
 
   /**
    * Properties below are available only on Angular.
