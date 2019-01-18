@@ -29,7 +29,7 @@ import {
   Comment,
   UserList,
   // ChatRoom,
-  ChangeCategory, ChangePassword,
+  ChangeCategory, ChangePassword, Vote, VoteResponse,
   // Rooms
 } from './simplest.interface';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
@@ -620,7 +620,7 @@ export class SimplestService extends SimplestLibrary {
   }
 
 
-  vote(data) {
+  vote(data: Vote): Observable<VoteResponse> {
     data.run = 'post.vote';
     return this.post(data);
   }

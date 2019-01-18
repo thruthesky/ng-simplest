@@ -296,6 +296,8 @@ export interface Comment extends Request {
   photo?: string;
   name?: string;
   nickname?: string;
+  good?: string;
+  bad?: string;
 }
 
 export type Comments = Array<Comment>;
@@ -322,4 +324,14 @@ export interface UserList extends Request {
   page?: number;
   limit?: any;
   users?: Array<User>;
+}
+
+export interface Vote extends Request {
+  idx_post?: string;
+  vote?: 'G' | 'B';
+}
+
+export interface VoteResponse extends Response {
+  good: string;
+  bad: string;
 }
