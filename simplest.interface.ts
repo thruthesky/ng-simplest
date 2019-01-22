@@ -335,3 +335,12 @@ export interface VoteResponse extends Response {
   good: string;
   bad: string;
 }
+
+export interface VisitorStat extends Response {
+  domain: string;
+  date_stamp?: number;
+  ip?: string;
+  stamp_created?: number;
+}
+
+export type VisitorStats = Array<VisitorStat>;

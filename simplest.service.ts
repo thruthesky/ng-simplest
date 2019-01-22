@@ -29,7 +29,7 @@ import {
   Comment,
   UserList,
   // ChatRoom,
-  ChangeCategory, ChangePassword, Vote, VoteResponse,
+  ChangeCategory, ChangePassword, Vote, VoteResponse, VisitorStat, VisitorStats,
   // Rooms
 } from './simplest.interface';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
@@ -805,5 +805,9 @@ export class SimplestService extends SimplestLibrary {
       idx_site: this.siteSettings.idx,
       domain: this.currentDomain()
     });
+  }
+
+  getVisitorStats(): Observable<VisitorStats> {
+    return this.post({ run: 'log.get', domain: this.currentDomain() });
   }
 }
