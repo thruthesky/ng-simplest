@@ -110,6 +110,9 @@ export interface Category extends Request {
   name?: string;
   list_style?: PostListStyle;
   posts_per_page?: string;
+  menu_theme?: string;
+  like?: boolean;
+  dislike?: boolean;
 }
 export type Categories = Array<Category>;
 
