@@ -806,4 +806,5 @@ export class SimplestService extends SimplestLibrary {
       domain: this.currentDomain()
     });
   }
+
 }
