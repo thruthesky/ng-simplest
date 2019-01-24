@@ -29,7 +29,7 @@ import {
   Comment,
   UserList,
   // ChatRoom,
-  ChangeCategory, ChangePassword, Vote, VoteResponse, LogRequest, SiteVisitLog,
+  ChangeCategory, ChangePassword, Vote, VoteResponse, LogGet, Logs
   // Rooms
 } from './simplest.interface';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
@@ -807,8 +807,10 @@ export class SimplestService extends SimplestLibrary {
     });
   }
 
-  getVisitLog(data: LogRequest): Observable<SiteVisitLog> {
+
+  logGet(data: LogGet): Observable<Logs> {
     data.run = 'log.get';
     return this.post(data);
   }
+
 }

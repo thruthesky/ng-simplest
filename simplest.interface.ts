@@ -338,16 +338,14 @@ export interface VoteResponse extends Response {
   bad: string;
 }
 
-export interface LogRequest extends Request {
+export interface LogGet extends Request {
   domain: string;
   Ymd: string;
   for: string;
 }
-
-export interface LogResponse extends Response {
+export interface Log {
   Ymd: string;
-  visit: number;
+  visit: string;
 }
 
-
-export type SiteVisitLog = Array<LogResponse>;
+export type Logs = Array<Log>;
