@@ -110,6 +110,9 @@ export interface Category extends Request {
   name?: string;
   list_style?: PostListStyle;
   posts_per_page?: string;
+  menu_theme?: string;
+  good?: boolean;
+  bad?: boolean;
 }
 export type Categories = Array<Category>;
 
@@ -195,8 +198,7 @@ export interface Site extends Request {
   notificationParents?: string; // send push to parents on new comment
   notificationAllUsersNewPost?: string; // send push to all users on new post
 
-  menu_bg_color?: string;
-  menu_color?: string;
+  menu_default_theme?: string;
 }
 
 export interface DomainApply extends Request {
@@ -259,8 +261,8 @@ export interface Post extends Request {
   // This is for information backend which files to set to the post.
   files_idx?: Array<string>;
   comments?: Comments;
-  good?: string;
-  bad?: string;
+  good?: any;
+  bad?: any;
 
   /**
    * Properties below are available only on Angular.
