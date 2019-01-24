@@ -807,6 +807,7 @@ export class SimplestService extends SimplestLibrary {
     });
   }
 
+
   getVisitLog(data: LogRequest): Observable<SiteVisitLog> {
     data.run = 'log.get';
     return this.post(data);
