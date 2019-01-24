@@ -336,11 +336,15 @@ export interface VoteResponse extends Response {
   bad: string;
 }
 
-export interface VisitorStat extends Response {
+export interface LogRequest extends Request {
   domain: string;
-  date_stamp?: number;
-  ip?: string;
-  stamp_created?: number;
+  Ymd: string;
+  for: string;
 }
 
-export type VisitorStats = Array<VisitorStat>;
+export interface LogResponse extends Response {
+  Ymd: string;
+  visit: number;
+}
+
+export type SiteVisitLog = Array<LogResponse>;
