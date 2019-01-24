@@ -349,4 +349,5 @@ export interface LogResponse extends Response {
   visit: number;
 }
 
+
 export type SiteVisitLog = Array<LogResponse>;
