@@ -111,8 +111,8 @@ export interface Category extends Request {
   list_style?: PostListStyle;
   posts_per_page?: string;
   menu_theme?: string;
-  good?: boolean;
-  bad?: boolean;
+  good?: any;
+  bad?: any;
 }
 export type Categories = Array<Category>;
 
