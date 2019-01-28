@@ -109,6 +109,7 @@ export interface Category extends Request {
   slug?: string;
   name?: string;
   list_style?: PostListStyle;
+  philgo?: string;
   posts_per_page?: string;
   menu_theme?: string;
   good?: any;
