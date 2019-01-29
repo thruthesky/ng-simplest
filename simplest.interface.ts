@@ -200,6 +200,8 @@ export interface Site extends Request {
   notificationAllUsersNewPost?: string; // send push to all users on new post
 
   menu_default_theme?: string;
+
+  backgroundColor?: string; // site background color
 }
 
 export interface DomainApply extends Request {
