@@ -311,6 +311,17 @@ export class SimplestService extends SimplestLibrary {
     return this.post(data).pipe(tap(res => this.setUser(res)));
   }
 
+  /**
+   * this will reset user password and send new password to user email
+   */
+  forgotPassword(email: string): Observable<any> {
+    const data = {
+      run: 'user.forgot-password',
+      domain: this.currentDomain()
+    };
+    return this.post(data).pipe(tap(res => this.setUser(res)));
+  }
+
   file(options: { idx?; taxonomy?; relation?; code?}): Observable<File> {
     options['run'] = 'file.get';
     return this.post(options);

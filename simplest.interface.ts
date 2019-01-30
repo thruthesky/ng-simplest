@@ -68,6 +68,9 @@ export interface ChangePassword extends Request {
   old_password?: string;
   new_password?: string;
 }
+export interface ForgotPassword extends Request {
+  email?: string;
+}
 
 export interface FileCreateOptions extends Request {
   taxonomy?: string;
