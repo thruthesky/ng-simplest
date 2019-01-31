@@ -782,6 +782,10 @@ export class SimplestService extends SimplestLibrary {
     req['run'] = 'push-notification.token-save';
     return this.post(req);
   }
+  pushNotificationSubscribeTopic(req) {
+    req['run'] = 'push-notification.subscribe-topic';
+    return this.post(req);
+  }
   pushNotificationTokenUpdate(req) {
     req['run'] = 'push-notification.token-update';
     return this.post(req);
