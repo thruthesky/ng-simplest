@@ -43,6 +43,7 @@ export interface UserProfile {
   session_id?: string;
 }
 
+export type EventAction = 'register' | 'login' | 'profile' | 'profileUpdate' | 'logout' | 'passwordChange' | 'forgotPassword';
 export interface User extends Response {
   run?: string;
   session_id?: string;
@@ -62,6 +63,7 @@ export interface User extends Response {
   address?: string;
   photo?: File;
   stamp_created?: string;
+  event?: EventAction; // what event/action happens?
 }
 
 export interface ChangePassword extends Request {

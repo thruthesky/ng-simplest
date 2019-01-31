@@ -29,7 +29,7 @@ import {
   Comment,
   UserList,
   // ChatRoom,
-  ChangeCategory, ChangePassword, Vote, VoteResponse, LogGet, Logs, SiteDashboard
+  ChangeCategory, ChangePassword, Vote, VoteResponse, LogGet, Logs, SiteDashboard, EventAction
   // Rooms
 } from './simplest.interface';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
@@ -153,7 +153,7 @@ export class SimplestService extends SimplestLibrary {
    * @note it fires user event on register, login, logout, profile upload and when profile is loaded from backend.
    * @fix 2019-01-14 cookie not work on localhost ( localhost domain does not need leading dot )
    */
-  private setUser(user: User) {
+  private setUser(user: User, ev: EventAction) {
     if (this.config.enableLoginToAllSubdomains) {
       const data = JSON.stringify(user);
       let domain = this.currentRootDomain();
@@ -164,6 +164,10 @@ export class SimplestService extends SimplestLibrary {
       docCookies.setItem(USER_KEY, data, Infinity, '/', domain);
     } else {
       this.set(USER_KEY, user);
+    }
+
+    if (user) {
+      user.event = ev;
     }
     this.userEvent.next(user);
   }
@@ -305,7 +309,7 @@ export class SimplestService extends SimplestLibrary {
 
   register(user: User): Observable<User> {
     user.run = 'user.register';
-    return this.post(user).pipe(tap(res => this.setUser(res)));
+    return this.post(user).pipe(tap(res => this.setUser(res, 'register')));
   }
   resign(): Observable<any> {
     return this.post({ run: 'user.resign' }).pipe(
@@ -321,11 +325,11 @@ export class SimplestService extends SimplestLibrary {
       email: email,
       password: password
     };
-    return this.post(data).pipe(tap(res => this.setUser(res)));
+    return this.post(data).pipe(tap(res => this.setUser(res, 'login')));
   }
 
   logout() {
-    this.setUser(null);
+    this.setUser(null, 'logout');
   }
 
   profile(): Observable<User> {
@@ -333,11 +337,11 @@ export class SimplestService extends SimplestLibrary {
       run: 'user.profile'
     };
     // console.log('request data: ', data, this.user);
-    return this.post(data).pipe(tap(res => this.setUser(res)));
+    return this.post(data).pipe(tap(res => this.setUser(res, 'profile')));
   }
   profileUpdate(user: User): Observable<User> {
     user.run = 'user.update';
-    return this.post(user).pipe(tap(res => this.setUser(res)));
+    return this.post(user).pipe(tap(res => this.setUser(res, 'profileUpdate')));
   }
 
   /**
@@ -347,7 +351,7 @@ export class SimplestService extends SimplestLibrary {
    */
   changePassword(data: ChangePassword): Observable<{ idx_user: string }> {
     data['run'] = 'user.change-password';
-    return this.post(data).pipe(tap(res => this.setUser(res)));
+    return this.post(data).pipe(tap(res => this.setUser(res, 'passwordChange')));
   }
 
   /**
@@ -358,7 +362,7 @@ export class SimplestService extends SimplestLibrary {
       run: 'user.forgot-password',
       domain: this.currentDomain()
     };
-    return this.post(data).pipe(tap(res => this.setUser(res)));
+    return this.post(data).pipe(tap(res => this.setUser(res, 'forgotPassword')));
   }
 
   file(options: { idx?; taxonomy?; relation?; code?}): Observable<File> {
