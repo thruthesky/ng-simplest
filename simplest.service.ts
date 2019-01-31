@@ -172,7 +172,11 @@ export class SimplestService extends SimplestLibrary {
    *
    * @example
    *  const user = this.getUser<User>();
-   *  cosnt idx = this.getUser('idx');
+   *  const idx = this.getUser('idx');
+   *
+   * @fix @since 2019-01-31 When this method users localStorage, it only returns the user record object even if 'field' is set.
+   *  It now returns the value of the field if it is set on localStorage.
+   *
    */
   private getUser<T>(field = null): T {
     if (this.config.enableLoginToAllSubdomains) {
@@ -197,7 +201,18 @@ export class SimplestService extends SimplestLibrary {
       }
       // console.log('Got user from cookie: ', val);
     } else {
-      return this.get(USER_KEY);
+      const user = this.get(USER_KEY);
+      if (user) {
+        if (field === null) {
+          return user;
+        } else if (user[field] !== void 0) {
+          return user[field];
+        } else {
+          return null;
+        }
+      } else {
+        return null;
+      }
     }
   }
 
@@ -206,6 +221,9 @@ export class SimplestService extends SimplestLibrary {
    * @return
    *  user data
    *  or empty object if user didn't logged in to make it safe to use.
+   * @example
+   *    sp.user; // will return user record object.
+   *    sp.user.name; // will return user name or `undefined` if not set.
    */
   get user(): User {
     const data = this.getUser();
@@ -231,9 +249,24 @@ export class SimplestService extends SimplestLibrary {
   }
 
   /**
+   *
+   * Returns log in user's session id.
+   * Not tested.
+   * @todo test.
+   * @return
+   *  - A string of user login session id.
+   *  - undefined if user has not logged in.
+   */
+  get mySessionId(): string {
+    return this.user.session_id;
+  }
+
+  /**
+   *
    * Returns login user's idx in string.
    * @return
    *  empty string if the user didn't logged in.
+   *
    */
   get myIdx(): string {
     return this.getUser('idx');
@@ -247,6 +280,7 @@ export class SimplestService extends SimplestLibrary {
   }
 
   /**
+   *
    * Returns user name
    * @since 2019-01-14
    */
@@ -255,11 +289,16 @@ export class SimplestService extends SimplestLibrary {
   }
 
   /**
+   *
    * Returns nickname
+   *
    */
   get myNickname(): string {
     return this.getUser('nickname');
   }
+  /**
+   *
+   */
   get myEmail(): string {
     return this.getUser('email');
   }
