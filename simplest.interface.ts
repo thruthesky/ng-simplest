@@ -207,6 +207,12 @@ export interface Site extends Request {
   backgroundColor?: string; // site background color
 }
 
+export interface SiteDashboard extends Request {
+  idx?: string;
+  no_of_users?: string;
+  latest_posts?: Array<Post>;
+  latest_comment?: Comments;
+}
 export interface DomainApply extends Request {
   idx_site: string;
   domain: string;

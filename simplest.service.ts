@@ -29,7 +29,7 @@ import {
   Comment,
   UserList,
   // ChatRoom,
-  ChangeCategory, ChangePassword, Vote, VoteResponse, LogGet, Logs
+  ChangeCategory, ChangePassword, Vote, VoteResponse, LogGet, Logs, SiteDashboard
   // Rooms
 } from './simplest.interface';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
@@ -540,6 +540,11 @@ export class SimplestService extends SimplestLibrary {
     return this.post({ run: 'site.list' });
   }
 
+  siteDashboard(data: SiteDashboard): Observable<SiteDashboard> {
+    data.run = 'site.dashboard';
+    return this.post(data);
+  }
+
   siteCreate(data: Site): Observable<Site> {
     data.run = 'site.create';
     return this.post(data);
@@ -675,76 +680,7 @@ export class SimplestService extends SimplestLibrary {
     return this.post(data);
   }
 
-  /**
-   * Chat functionality
-   */
 
-  /**
-   * @desc will return 100 rooms by default.
-   * @param data object that must contain:
-   * - Required : idx_site.
-   * - Optional : limit, page. order_by.
-   * - Note : order_by needs a specific field in the table.
-   */
-  // chatRooms(data): Observable<Rooms> {
-  //   data['run'] = SPCHAT + 'rooms';
-  //   return this.post(data);
-  // }
-
-  // chatRoomsOfNewMessages(idx_site: string): Observable<Array<ChatRoom>> {
-  //   const data = {
-  //     run: SPCHAT + 'rooms-of-new-messages',
-  //     idx_site: idx_site
-  //   };
-  //   return this.post(data);
-  // }
-
-  /**
-   * @desc will return idx_chat_room & idx_chat_message.
-   * @param data object to be store in simplest.
-   * - Required : status, name, idx_site.
-   * - Optional : message only if status is equal to 'N' || 'R'.
-   * - Note : it will create a room only if room doesn't exists in simplest backend.
-   */
-  // chatSendMessage(data: any): Observable<any> {
-  //   data.run = SPCHAT + 'send-message';
-  //   return this.post(data);
-  // }
-
-  /**
-   * @desc this will zero the stamp_last_message.
-   * @param idx_chat_room chat room id.
-   */
-  // chatReadMessage(idx_chat_room) {
-  //   const data = {
-  //     run: SPCHAT + 'read-message',
-  //     idx_chat_room: idx_chat_room
-  //   };
-  //   return this.post(data);
-  // }
-  /**
-   * @desc will retrieve 20 messages by default.
-   * @param data object that must contain:
-   * - Required : name, idx_site.
-   * - Optional : limit, page.
-   * - Note : this check if the room exists.
-   */
-  // chatRoomMessages(data: any) {
-  //   data.run = SPCHAT + 'room-messages';
-  //   return this.post(data);
-  // }
-
-  /**
-   * @desc return the update room from simplest.
-   * @param idx_chat_room chat room id.
-   */
-  // chatUpdateRoom(idx_chat_room: any) {
-  //   const data = {
-  //     run: SPCHAT + 'update-room',
-  //     idx_chat_room: idx_chat_room
-  //   };
-  //   return this.post(data);
-  // }
 
   /**
    * Returns thumbnail URL
