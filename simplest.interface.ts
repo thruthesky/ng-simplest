@@ -210,7 +210,19 @@ export interface Site extends Request {
 export interface SiteDashboard extends Request {
   idx?: string;
   no_of_users?: string;
-  latest_posts?: Array<Post>;
+  no_of_subscribers?: string;
+  no_of_unique_visitor?: string;
+  no_of_posts?: {
+    idx?: string;
+    name?: string;
+    daily?: Array<string>;
+  };
+  total_no_of_posts?: {
+    daily: Array<string>;
+    total: string;
+  };
+  no_of_comments?: string;
+  latest_posts?: Posts;
   latest_comment?: Comments;
 }
 export interface DomainApply extends Request {
