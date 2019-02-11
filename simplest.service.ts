@@ -110,7 +110,7 @@ export class SimplestService extends SimplestLibrary {
     }
     if (data['debug']) {
       const q = this.httpBuildQuery(data);
-      console.log('PhilGoApiService::post() url: ', this.backendUrl + '?' + q);
+      // console.log('PhilGoApiService::post() url: ', this.backendUrl + '?' + q);
     }
 
     if (!this.backendUrl) {
@@ -160,7 +160,7 @@ export class SimplestService extends SimplestLibrary {
       if (domain !== 'localhost') {
         domain = '.' + domain;
       }
-      console.log(USER_KEY, data, Infinity, '/', domain);
+      // console.log(USER_KEY, data, Infinity, '/', domain);
       docCookies.setItem(USER_KEY, data, Infinity, '/', domain);
     } else {
       this.set(USER_KEY, user);
