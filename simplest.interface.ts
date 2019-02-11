@@ -279,9 +279,9 @@ export interface Post extends Request {
   title?: string;
   content?: string;
   content_stripped?: string;
-  stamp_created?: number;
-  stamp_updated?: number;
-  stamp_deleted?: number;
+  stamp_created?: string;
+  stamp_updated?: string;
+  stamp_deleted?: string;
   // This will only be available from backend. It must be empty array or undefined when it is sent to the backend.
   files?: Files;
   // This is for information backend which files to set to the post.
