@@ -218,6 +218,7 @@ export interface SiteDashboard extends Request {
     idx?: string;
     name?: string;
     daily?: Array<string>;
+    total?: string;
   };
   total_no_of_posts?: {
     daily: Array<string>;
