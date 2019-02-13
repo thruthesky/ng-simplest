@@ -294,7 +294,7 @@ export class SimplestService extends SimplestLibrary {
 
   get myPhotoUrl(): string {
     const photo = this.getUser('photo');
-    if ( photo && photo['url'] ) {
+    if (photo && photo['url']) {
       return photo['url'];
     }
     return '';
@@ -711,6 +711,8 @@ export class SimplestService extends SimplestLibrary {
     fileOrUrl: any,
     options: { width?: number; height?: number; quality?: number; mode?: 'resize' | 'crop' } = {}
   ): string {
+    // console.log('thumbnailUrl: ', fileOrUrl);
+
     if (!fileOrUrl) {
       return '';
     }
