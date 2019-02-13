@@ -292,6 +292,14 @@ export class SimplestService extends SimplestLibrary {
     return this.getUser('name');
   }
 
+  get myPhotoUrl(): string {
+    const photo = this.getUser('photo');
+    if ( photo && photo['url'] ) {
+      return photo['url'];
+    }
+    return '';
+  }
+
   /**
    *
    * Returns nickname
