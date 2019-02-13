@@ -110,7 +110,7 @@ export class SimplestService extends SimplestLibrary {
     }
     if (data['debug']) {
       const q = this.httpBuildQuery(data);
-      // console.log('PhilGoApiService::post() url: ', this.backendUrl + '?' + q);
+      console.log('PhilGoApiService::post() url: ', this.backendUrl + '?' + q);
     }
 
     if (!this.backendUrl) {
