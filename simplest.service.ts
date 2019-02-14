@@ -810,6 +810,14 @@ export class SimplestService extends SimplestLibrary {
       domain: this.currentDomain()
     });
   }
+  sendPushNotification(req): Observable<any> {
+    if (!req['action']) {
+      req['action'] = this.currentDomain();
+    }
+    req['run'] = 'push-notification.send-notification';
+    req['idx_site'] = this.siteSettings.idx;
+    return this.post(req);
+  }
 
 
   logGet(data: LogGet): Observable<Logs> {
