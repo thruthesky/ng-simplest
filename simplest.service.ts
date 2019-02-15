@@ -811,8 +811,8 @@ export class SimplestService extends SimplestLibrary {
     });
   }
   sendPushNotification(req): Observable<any> {
-    if (!req['action']) {
-      req['action'] = this.currentDomain();
+    if (!req['click_action']) {
+      req['click_action'] = this.currentDomain();
     }
     req['run'] = 'push-notification.send-notification';
     req['idx_site'] = this.siteSettings.idx;
