@@ -119,6 +119,7 @@ export interface Category extends Request {
   menu_theme?: string;
   good?: any;
   bad?: any;
+  hide?: any;
 }
 export type Categories = Array<Category>;
 
