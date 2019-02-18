@@ -220,6 +220,7 @@ export interface SiteDashboard extends Request {
     name?: string;
     daily?: Array<string>;
     total?: string;
+    date?: any;
   };
   total_no_of_posts?: {
     daily: Array<string>;
