@@ -120,6 +120,8 @@ export interface Category extends Request {
   good?: any;
   bad?: any;
   hide?: any;
+  url?: string;
+  target?: any;
 }
 export type Categories = Array<Category>;
 

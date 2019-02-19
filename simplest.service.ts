@@ -494,6 +494,7 @@ export class SimplestService extends SimplestLibrary {
     }
     return this.post({ run: 'site.get', idx_site_or_domain: idx_site_or_domain }).pipe(
       tap(s => {
+        // console.log('site.get: ', s);
         this.siteSettings = s;
         this.set(SITE_KEY, s);
         this.siteEvent.next(s);
