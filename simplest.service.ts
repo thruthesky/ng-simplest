@@ -29,7 +29,7 @@ import {
   Comment,
   UserList,
   // ChatRoom,
-  ChangeCategory, ChangePassword, Vote, VoteResponse, LogGet, Logs, SiteDashboard, EventAction
+  ChangeCategory, ChangePassword, Vote, VoteResponse, LogGet, Logs, SiteDashboard, EventAction, PostListOptions
   // Rooms
 } from './simplest.interface';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
@@ -641,9 +641,30 @@ export class SimplestService extends SimplestLibrary {
     return this.post(data);
   }
 
-  postList(data: PostList): Observable<PostList> {
+  postList(data: PostList, options: PostListOptions = {}): Observable<PostList> {
+
     data.run = 'post.list';
-    return this.post(data);
+
+    if (options.cache) {
+      if ( options.cacheId === void 0 ) {
+        options.cacheId = `${data.idx_category}-${data.slug}-${data.page}`;
+      }
+      const cachedData = this.get(options.cacheId);
+      if (cachedData) {
+        cachedData['cache'] = true;
+        cachedData['cacheId'] = options.cacheId;
+      }
+      console.log(options, cachedData);
+      const subject = new BehaviorSubject(cachedData);
+      this.post(data).subscribe(res => {
+        this.set(options.cacheId, res);
+        subject.next(res);
+      }, e => subject.error(e));
+      return subject;
+    } else {
+      // console.log('post.search without cache', data);
+      return this.post(data);
+    }
   }
 
   postCreate(data: Post): Observable<Post> {
