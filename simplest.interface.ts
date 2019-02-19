@@ -279,6 +279,7 @@ export interface Post extends Request {
   taxonomy?: string;
   relation?: any;
   slug?: string;
+  access_code?: string;
   title?: string;
   content?: string;
   content_stripped?: string;
