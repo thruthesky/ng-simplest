@@ -654,7 +654,7 @@ export class SimplestService extends SimplestLibrary {
         cachedData['cache'] = true;
         cachedData['cacheId'] = options.cacheId;
       }
-      console.log(options, cachedData);
+      // console.log(options, cachedData);
       const subject = new BehaviorSubject(cachedData);
       this.post(data).subscribe(res => {
         this.set(options.cacheId, res);
