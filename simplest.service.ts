@@ -488,7 +488,10 @@ export class SimplestService extends SimplestLibrary {
       const cache = this.get(SITE_KEY);
       if (cache) {
         // console.log('callback with: ', cache);
+        cache['cache'] = true;
         this.siteSettings = cache;
+
+        this.siteEvent.next(cache);
         callback(cache);
       }
     }
