@@ -754,7 +754,10 @@ export class SimplestService extends SimplestLibrary {
 
     // console.log('url: ', url);
 
-    const path = url.substr(url.indexOf('/files/'));
+    let path = url.substr(url.indexOf('/files/'));
+    if ( path.indexOf('?') !== -1 ) {
+      path = path.substr(0, path.indexOf('?'));
+    }
     // console.log('path: ', path);
     url =
       `${this.backendHomeUrl}etc/thumbnail/?src=../..${path}&width=${options.width}&height=${options.height}` +
