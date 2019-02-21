@@ -367,6 +367,7 @@ export class SimplestService extends SimplestLibrary {
    */
   forgotPassword(email: string): Observable<any> {
     const data = {
+      email: email,
       run: 'user.forgot-password',
       domain: this.currentDomain()
     };
