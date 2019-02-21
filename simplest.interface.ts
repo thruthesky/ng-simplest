@@ -216,10 +216,13 @@ export interface SiteDashboard extends Request {
   idx?: string;
   no_of_users?: string;
   no_of_subscribers?: string;
-  no_of_unique_visitor?: string;
+  no_of_unique_visitors?: {
+    count?: string;
+    domain?: string;
+  };
   no_of_posts?: {
-    idx?: string;
-    name?: string;
+    // idx?: string;
+    // name?: string;
     daily?: Array<string>;
     total?: string;
     date?: any;
@@ -228,9 +231,9 @@ export interface SiteDashboard extends Request {
     daily: Array<string>;
     total: string;
   };
-  no_of_comments?: string;
   latest_posts?: Posts;
-  latest_comment?: Comments;
+  // latest_comment?: Comments;
+  // no_of_comments?: string;
 }
 export interface DomainApply extends Request {
   idx_site: string;
