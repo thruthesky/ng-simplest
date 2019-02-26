@@ -210,6 +210,7 @@ export interface Site extends Request {
   menu_default_theme?: string;
 
   backgroundColor?: string; // site background color
+  google_tracking_id?: string;
 }
 
 export interface SiteDashboard extends Request {
