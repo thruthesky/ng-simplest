@@ -391,3 +391,12 @@ export interface Log {
 }
 
 export type Logs = Array<Log>;
+
+
+
+export interface PostQueryOption {
+  fields: string;
+  where: string;
+  orderby?: string;
+  limit: string;
+}

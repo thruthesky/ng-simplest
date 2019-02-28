@@ -29,7 +29,7 @@ import {
   Comment,
   UserList,
   // ChatRoom,
-  ChangeCategory, ChangePassword, Vote, VoteResponse, LogGet, Logs, SiteDashboard, EventAction, PostListOptions
+  ChangeCategory, ChangePassword, Vote, VoteResponse, LogGet, Logs, SiteDashboard, EventAction, PostListOptions, PostQueryOption
   // Rooms
 } from './simplest.interface';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
@@ -645,12 +645,20 @@ export class SimplestService extends SimplestLibrary {
     return this.post(data);
   }
 
+  /**
+   * Get posts.
+   * @param data post list data condition
+   * @param options extra options
+   *
+   * @examples to list all posts of a site
+   *  this.postList({ idx_category: '', taxonomy: 'sites', relation: this.a.site.idx;}).subscribe();
+   */
   postList(data: PostList, options: PostListOptions = {}): Observable<PostList> {
 
     data.run = 'post.list';
 
     if (options.cache) {
-      if ( options.cacheId === void 0 ) {
+      if (options.cacheId === void 0) {
         options.cacheId = `${data.idx_category}-${data.slug}-${data.page}`;
       }
       const cachedData = this.get(options.cacheId);
@@ -669,6 +677,43 @@ export class SimplestService extends SimplestLibrary {
       // console.log('post.search without cache', data);
       return this.post(data);
     }
+  }
+
+  /**
+   * post query
+   * @param options options
+   * @example of getting posts with access_code
+   * s.postQuery({
+    *   fields: '*',
+    *   where: `taxonomy='sites' AND relation=${this.settings.siteIdx} AND access_code LIKE 'gallery-%'`,
+    *   limit: '10',
+    *   orderby: 'access_code asc'
+    *  }).subscribe(res => {
+    *      console.log('post.query: ', res);
+    *  }, e => console.error(e));
+    *
+    * @example of getting all posts without access_code
+    *     this.a.s.postQuery({
+    *   fields: '*',
+    *   where: `taxonomy='sites' AND relation=${this.a.settings.siteIdx} AND access_code IS NULL`,
+    *   limit: '10',
+    *   orderby: 'idx desc'
+    *  }).subscribe(res => {
+    *   console.log('forum: post.query: ', res);
+    * }, e => console.error(e));
+    *
+    */
+  postQuery(options: PostQueryOption): Observable<Post[]> {
+    options['run'] = 'post.query';
+    // let url = `https://api.sonub.com/api.php?run=post.query` +
+    //   `&fields=${options.fields}` +
+    //   `&where=${options.where}` +
+    //   `&limit=${options.limit}`
+    //   ;
+    // if (options.orderby) {
+    //   url += '&orderby=' + options.orderby;
+    // }
+    return this.post(options);
   }
 
   postCreate(data: Post): Observable<Post> {
@@ -759,7 +804,7 @@ export class SimplestService extends SimplestLibrary {
     // console.log('url: ', url);
 
     let path = url.substr(url.indexOf('/files/'));
-    if ( path.indexOf('?') !== -1 ) {
+    if (path.indexOf('?') !== -1) {
       path = path.substr(0, path.indexOf('?'));
     }
     // console.log('path: ', path);
