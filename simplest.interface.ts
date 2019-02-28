@@ -211,6 +211,7 @@ export interface Site extends Request {
 
   backgroundColor?: string; // site background color
   google_tracking_id?: string;
+  admin_list?: string;
 }
 
 export interface SiteDashboard extends Request {
