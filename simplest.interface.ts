@@ -332,9 +332,13 @@ export interface Comment extends Request {
   depth?: string;
 
   show?: any; // This exists only on client end to show or not.
-  photo?: string;
-  name?: string;
-  nickname?: string;
+
+  // photo?: string; - deprecated since simplest backend return an object with post like structure use user instead
+  // name?: string; - deprecated since simplest backend return an object with post like structure use user instead
+  // nickname?: string; - deprecated since simplest backend return an object with post like structure use user instead
+
+  user?: PostUser;
+
   good?: string;
   bad?: string;
 }
