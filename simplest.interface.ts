@@ -333,9 +333,9 @@ export interface Comment extends Request {
 
   show?: any; // This exists only on client end to show or not.
 
-  // photo?: string; - deprecated since simplest backend return an object with post like structure use user instead
-  // name?: string; - deprecated since simplest backend return an object with post like structure use user instead
-  // nickname?: string; - deprecated since simplest backend return an object with post like structure use user instead
+  // photo?: string; - deprecated since simplest backend return an object with post like structure, use `user.photo_url` instead
+  // name?: string; - deprecated since simplest backend return an object with post like structure, use `user.name` instead
+  // nickname?: string; - deprecated since simplest backend return an object with post like structure, use `user.nickname` instead
 
   user?: PostUser;
 
